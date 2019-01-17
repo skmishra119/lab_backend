@@ -1,0 +1,51 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="content-header">
+      <h4>Users</h4>
+      <div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="btn-toolbar" role="toolbar"> 
+              <div class="btn-group"> 
+                <button type="button" class="btn btn-default" title="new User" alt="New User" (click)="onNewUser()"> 
+                  <span class="glyphicon glyphicon-plus"></span> 
+                </button>
+                <button type="button" class="btn btn-default" title="Edit User" alt="Edit User"> 
+                  <span class="glyphicon glyphicon-edit"></span> 
+                </button>
+                <button type="button" class="btn btn-default" title="Delete User" alt="Delete User"> 
+                  <span class="glyphicon glyphicon-trash"> 
+                  </span> 
+                </button>
+              </div> 
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+  		<thead>
+    		<tr>
+      			<th>Email Address</th>
+      			<th>Role</th>
+      			<th>Full  Name</th>
+      			<th>Last Updated</th>
+    		</tr>
+  		</thead>
+  		<tbody *ngIf="persons?.length != 0">
+   			<tr *ngFor="let person of data">
+         		<td>{{person.email_id}}</td>
+         		<td>{{person.role}}</td>
+         		<td>{{person.fullname}}</td>
+         		<td>{{person.updated}}</td>
+     		</tr>
+  		</tbody>
+      <tbody *ngIf="persons?.length == 0">
+        <tr>
+          <td colspan="4" class="no-data-available">No data availablein to  show!</td>
+        </tr>
+      <tbody>
+	</table>
+  </div>
+</div>

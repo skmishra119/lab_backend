@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+.container{
+	width: 100% !important;
+	margin-bottom: 20px !important;
+}
+
+.jumbotron {
+	 padding: 10px !important;
+}
+.jumbotron .container{
+	width: 100% !important;
+}
+
+.content-header h4 { float: left !important; margin-top: 2px !important; }
+
+hr {
+	border: 1px solid #666 !important;
+}
