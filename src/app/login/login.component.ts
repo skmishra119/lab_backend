@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Config } from '../config';
 import { AuthService } from '../shared/services/auth.service';
 import { SessionService } from '../shared/services/session.service';
 import { Router } from '@angular/router';
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
   };*/
 
   constructor(
+    private conf: Config,
     private authService: AuthService,
     private sessionService: SessionService,
     private router: Router,
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   doLogin() {
-    this.http.post('http://lab.bintechsol.com/backend/api/user/auth', this.user).subscribe(success => {
+    this.http.post(this.conf.apiPath+'api/user/auth', this.user).subscribe(success => {
         if(success.message.type=='success'){
           this.errorMessage='';
           this.authService.userClaim.token = success.data[0].token;
@@ -58,7 +60,7 @@ export class LoginComponent implements OnInit {
     if (this.authService.isAuthorised()) {
       this.router.navigate(['/dashboard']);
     }
-    this.http.get('http://lab.bintechsol.com/backend/api/labs').subscribe(success => {
+    this.http.get(this.conf.apiPath+'api/labs').subscribe(success => {
       this.labs = success;
     });
   }

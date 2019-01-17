@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { Config } from './config';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +23,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CategoriesEditComponent } from './categories/categories-edit/categories-edit.component';
 import { UsersEditComponent } from './users/users-edit/users-edit.component';
+import { DoctorsComponent } from './doctors/doctors.component';
+import { DoctorsEditComponent } from './doctors/doctors-edit/doctors-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { UsersEditComponent } from './users/users-edit/users-edit.component';
     HeaderComponent,
     FooterComponent,
     CategoriesEditComponent,
-    UsersEditComponent
+    UsersEditComponent,
+    DoctorsComponent,
+    DoctorsEditComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,7 @@ import { UsersEditComponent } from './users/users-edit/users-edit.component';
     DataTablesModule
   ],
   providers: [
-    SessionService, HelperService, AuthService, CookieService,
+    Config, SessionService, HelperService, AuthService, CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

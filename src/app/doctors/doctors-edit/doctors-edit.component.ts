@@ -6,42 +6,41 @@ import { AuthService } from '../../shared/services/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../../shared/services/session.service';
 
-
 @Component({
-  selector: 'app-users-edit',
-  templateUrl: './users-edit.component.html',
-  styleUrls: ['./users-edit.component.css']
+  selector: 'app-doctors-edit',
+  templateUrl: './doctors-edit.component.html',
+  styleUrls: ['./doctors-edit.component.css']
 })
-export class UsersEditComponent implements OnInit {
-    id: string;
+export class DoctorsEditComponent implements OnInit {
+	id: string;
     editMode = false;
-  	userForm: FormGroup;
-	  login: any = [];
-    roles: any = [];
-	
-    user: any = {
-      title: '',
+  	doctorForm: FormGroup;
+	login: any = [];
+
+	doctor: any = {
+      	title: '',
     	first_name: '',
-    	last_name:'',
-    	email_id:'',
-    	status: '',
-    	role:''
+    	last_name: '',
+    	email_id: '',
+    	clinic: '',
+    	address: '',
+    	city: '',
+    	mobile: '',
+    	status: ''
   	};
 
+  	errorMessage: string;
+
   	constructor(
-      private conf: Config,
-      private authService: AuthService, 
+  		private conf: Config,
+      	private authService: AuthService, 
   		private sessionService: SessionService, 
   		private http: HttpClient,
   		private route: ActivatedRoute,
-      private router: Router
+      	private router: Router
     ) { }
 
   	ngOnInit() {
-  		this.login = this.sessionService.getItem('userClaim');
-  		this.http.get(this.conf.apiPath+'api/roles/'+this.login.lab_id+'::'+this.login.userId).subscribe(success => {
-      		this.roles = success;
-    	});
   		this.route.params
       	.subscribe(
         	(params: Params) => {
@@ -49,9 +48,9 @@ export class UsersEditComponent implements OnInit {
           		this.editMode = params['recId'] != null;
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
-		      		this.http.get(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
+		      		this.http.get(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
 		      			if(editData.message.type=='success'){
-		      				this.user = editData.data[0];
+		      				this.doctor = editData.data[0];
 	        			}
 		    		});
 		      	}
@@ -63,9 +62,9 @@ export class UsersEditComponent implements OnInit {
   	doSubmit() {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-  			this.http.put(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
+  			this.http.put(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id, this.doctor).subscribe(success => {
 	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/users']);
+	          		this.router.navigate(['/doctors']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -73,9 +72,9 @@ export class UsersEditComponent implements OnInit {
 	    	});
 	    } else {
 	    	//console.log(this.user);
-	    	this.http.post(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.login.userId, this.user).subscribe(success => {
-	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/users']);
+	    	this.http.post(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.login.userId, this.doctor).subscribe(success => {
+	    		if(success.message.type=='success'){
+	          		this.router.navigate(['/doctors']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -87,9 +86,9 @@ export class UsersEditComponent implements OnInit {
   	doDelete(){
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-  			this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
+  			this.http.delete(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id, this.doctor).subscribe(success => {
 	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/users']);
+	          		this.router.navigate(['/doctors']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -99,6 +98,6 @@ export class UsersEditComponent implements OnInit {
   	}
   	
   	doCancel(){
-  		this.router.navigate(['/users']);
+  		this.router.navigate(['/doctors']);
   	}
 }

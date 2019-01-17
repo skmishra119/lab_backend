@@ -1,0 +1,55 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="content-header">
+      <h4>Users</h4>
+      <div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="btn-toolbar" role="toolbar"> 
+              <div class="btn-group"> 
+                <button type="button" class="btn btn-default" title="new Doctor" alt="New Doctor" (click)="onNewDoctor()"> 
+                  <span class="glyphicon glyphicon-plus"></span> 
+                </button>
+                <button type="button" class="btn btn-default" title="Edit Doctor Info" alt="Edit Doctor Info"> 
+                  <span class="glyphicon glyphicon-edit"></span> 
+                </button>
+                <button type="button" class="btn btn-default" title="Delete User" alt="Delete User"> 
+                  <span class="glyphicon glyphicon-trash"> 
+                  </span> 
+                </button>
+              </div> 
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+  		<thead>
+    		<tr>
+      			<th>Email Address</th>
+      			<th>Full Name</th>
+      			<th>Clinic</th>
+      			<th>Address</th>
+      			<th>Contact No.</th>
+      			<th>Updated  On</th>
+    		</tr>
+  		</thead>
+  		<tbody *ngIf="persons?.length != 0">
+   			<tr *ngFor="let doctor of data">
+         		<td>{{doctor.email_id}}</td>
+         		<td>{{doctor.fullname}}</td>
+         		<td>{{doctor.clinic}}</td>
+         		<td>{{doctor.address}}</td>
+         		<td>{{doctor.mobile}}</td>
+         		<td>{{doctor.updated}}</td>
+     		</tr>
+  		</tbody>
+      <tbody *ngIf="persons?.length == 0">
+        <tr>
+          <td colspan="4" class="no-data-available">No data availablein to  show!</td>
+        </tr>
+      <tbody>
+	</table>
+  </div>
+</div>
