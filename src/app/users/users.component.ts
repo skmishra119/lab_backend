@@ -24,7 +24,8 @@ class Person {
 
 export class UsersComponent implements OnInit {
     login: any = [];
-	  data: any = [];
+	  data = [];
+    ans = false;
     dtOptions: DataTables.Settings = {};
   	
     constructor(
@@ -34,50 +35,49 @@ export class UsersComponent implements OnInit {
       private http: HttpClient, 
       private router: Router, 
       private route: ActivatedRoute) {
+      this.login= this.sessionService.getItem('userClaim');
+      this.http.get(this.conf.apiPath+'api/users/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
+        this.data = uData;
+        this.dtOptions = {
+          pagingType: 'full_numbers',
+          pageLength: 10,
+          processing: true
+        };
+      }, error => console.error(error));
     }
 
   	ngOnInit() {
       this.login= this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/users/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
-        this.data=uData;
+        this.data = uData;
         this.dtOptions = {
-          data: this.data,
-          pageLength: 20,
-          columns: [
-            {
-              title: 'Email ID',
-              data: 'email_id'
-            }, {
-              title: 'Role',
-              data: 'role'
-            }, {
-              title: 'Full Name',
-              data: 'fullname'
-            }, {
-              title: 'Updated  On',
-              data: 'updated'
-            }
-          ],
-          rowCallback: (row: Node, rData: any[] | Object, index: number) => {
-            const self = this;
-            // Unbind first in order to avoid any duplicate handler
-            // (see https://github.com/l-lin/angular-datatables/issues/87)
-            $('td', row).unbind('click');
-            $('td', row).bind('click', () => {
-              this.someClickHandler(rData);
-            });
-            return row;
-          }
+          pagingType: 'full_numbers',
+          pageLength: 10,
+          processing: true
         };
-      });
+      }, error => console.error(error));
       console.log(data);
    	}
 
-    someClickHandler(info: any) {
-      this.router.navigate(['edit',  info.user_id], {relativeTo: this.route});
-    }
-
     onNewUser() {
       this.router.navigate(['new'], {relativeTo: this.route}); 
+    }
+
+    onEditRecord(id: string){
+      this.router.navigate(['edit',  id], {relativeTo: this.route});
+    }
+    
+    onDeleteRecord(id: string){
+      this.ans = confirm('Are you sure, you want to delete?')
+      if(this.ans==true){
+        this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+id, this.user).subscribe(success => {
+          if(success.message.type=='success'){
+            this.router.navigate(['/users']);
+          } else {
+            this.errorMessage = success.message.msg;
+            return false;  
+          }
+        });
+      }
     }
 }

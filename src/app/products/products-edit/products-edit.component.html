@@ -3,8 +3,8 @@
 	    <div class="col-md-4 col-md-offset-4 jumbotron">
 		  	<div class="container">
 		    	<div class="content-header">
-		      		<h4>Category</h4>
-		    		<form #catForm="ngForm" name="catForm" novalidate (ngSubmit)="catForm.form.valid && doSubmit()">  		
+		      		<h4>Product</h4>
+		    		<form #patForm="ngForm" name="patForm" novalidate (ngSubmit)="patForm.form.valid && doSubmit()">  		
 		      			<div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
 		        			<ul class="nav navbar-nav navbar-right">
 		          				<li>
@@ -27,32 +27,31 @@
 		    		  	<hr/>
 		    	    	<div class="form-group">
 				        	<label>Name*</label>
-				          	<input type="text" name="name" #name="ngModel" [(ngModel)]="category.name" class="form-control"
+				          	<input type="text" name="name" #name="ngModel" [(ngModel)]="product.name" class="form-control"
 				            required>
-				          	<span *ngIf="name.invalid && name.touched || (name.invalid && catForm.submitted)" style="color:red">Name is required</span>
+				          	<span *ngIf="name.invalid && name.touched || (name.invalid && patForm.submitted)" style="color:red">Name is required</span>
 				        </div>
 				        <div class="form-group">
 				        	<label>Description</label>
-				          	<input type="text" name="description" #last_name="ngModel" [(ngModel)]="category.description" class="form-control">
+				          	<input type="text" name="description" #last_name="ngModel" [(ngModel)]="product.description" class="form-control">
 				        </div>
 				        <div class="form-group">
-		          			<label>Child Of*</label>
-		          			<select type="text" name="parent" #parent="ngModel" [(ngModel)]="category.parent_id" class="form-control" required>
+		          			<label>Category*</label>
+		          			<select type="text" name="category_id" #category_id="ngModel" [(ngModel)]="product.category_id" class="form-control" required>
 		            			<option value="">Select One</option>
-		            			<option value="0">No Parent</option>
-		            			<option *ngFor="let cat of pCat" [value]="cat.cat_id">{{cat.parent}}</option>
+		            			<option *ngFor="let cat of pCat" [value]="cat.id">{{cat.name}}</option>
 		          			</select>
-		          			<span *ngIf="parent.invalid && parent.touched || (parent.invalid && catForm.submitted)" style="color:red">Select parent category</span>
+		          			<span *ngIf="category_id.invalid && category_id.touched || (category_id.invalid && patForm.submitted)" style="color:red">Select category</span>
 		          			<div *ngIf="errorMessage != ''" style="color:red">{{errorMessage}}</div>
 		        		</div>
 				        <div class="form-group">
 				          	<label>Status*</label>
-				          	<select type="text" name="status" #status="ngModel" [(ngModel)]="category.status" class="form-control" required>
+				          	<select type="text" name="status" #status="ngModel" [(ngModel)]="product.status" class="form-control" required>
 				            	<option value="">Select One</option>
 				            	<option value="ACTIVE">ACTIVE</option>
 				            	<option value="DELETED">DELETED</option>
 				          	</select>
-				          	<span *ngIf="status.invalid && status.touched || (status.invalid && catForm.submitted)" style="color:red">Select
+				          	<span *ngIf="status.invalid && status.touched || (status.invalid && patForm.submitted)" style="color:red">Select
 				            Status</span>
 				          	<div *ngIf="errorMessage != ''" style="color:red">{{errorMessage}}</div>
 				        </div>

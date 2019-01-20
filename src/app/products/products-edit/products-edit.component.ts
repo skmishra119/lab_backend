@@ -7,28 +7,28 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../../shared/services/session.service';
 
 @Component({
-  selector: 'app-categories-edit',
-  templateUrl: './categories-edit.component.html',
-  styleUrls: ['./categories-edit.component.css']
+  selector: 'app-products-edit',
+  templateUrl: './products-edit.component.html',
+  styleUrls: ['./products-edit.component.css']
 })
-export class CategoriesEditComponent implements OnInit {
 
+export class ProductsEditComponent implements OnInit {
 	id: string;
-  editMode = false;
-  ans = false;
-  catForm: FormGroup;
+	editMode = false;
+  	ans = false;
+  	patForm: FormGroup;
 	login: any = [];
 
-	category: any = {
-      name: '',
+	product: any = {
+    	name: '',
     	description: '',
-    	parent_id: '',
+    	category_id: '',
     	status: ''
   	};
 
     pCat: any =  [];
 
-  	errorMessage: string;
+	errorMessage: string;
 
   	constructor(
   		private conf: Config,
@@ -39,21 +39,16 @@ export class CategoriesEditComponent implements OnInit {
       	private router: Router
     ) {
       this.login = this.sessionService.getItem('userClaim');
-      this.http.get(this.conf.apiPath+'api/categories/parent/'+this.login.lab_id+'::0').subscribe(pCatData => {
-      
-        if(pCatData.message.type=='success'){
-          this.pCat = pCatData.data;
-        }
+      this.http.get(this.conf.apiPath+'api/categories/'+this.login.lab_id+'::'+this.login.userId).subscribe(pCatData => {
+          this.pCat = pCatData;
       });
      }
 
   	ngOnInit() {
-      this.login = this.sessionService.getItem('userClaim');
-      this.http.get(this.conf.apiPath+'api/categories/parent/'+this.login.lab_id+'::0').subscribe(pCatData => {
-        if(pCatData.message.type=='success'){
-          this.pCat = pCatData.data;
-        }
-      });
+    	this.login = this.sessionService.getItem('userClaim');
+      	this.http.get(this.conf.apiPath+'api/categories/'+this.login.lab_id+'::'+this.login.userId).subscribe(pCatData => {
+       		this.pCat = pCatData;
+      	});
 
   		this.route.params
       	.subscribe(
@@ -62,9 +57,9 @@ export class CategoriesEditComponent implements OnInit {
           		this.editMode = params['recId'] != null;
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
-		      		  this.http.get(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
-                if(editData.message.type=='success'){
-		      				this.category = editData.data[0];
+		      		this.http.get(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
+                		if(editData.message.type=='success'){
+		      				this.product = editData.data[0];
 	        			}
 		    		});
 		      	}
@@ -76,9 +71,9 @@ export class CategoriesEditComponent implements OnInit {
   	doSubmit() {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-  			this.http.put(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id, this.category).subscribe(success => {
+  			this.http.put(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id, this.product).subscribe(success => {
 	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/categories']);
+	          		this.router.navigate(['/products']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -86,9 +81,9 @@ export class CategoriesEditComponent implements OnInit {
 	    	});
 	    } else {
 	    	//console.log(this.user);
-	    	this.http.post(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.login.userId, this.category).subscribe(success => {
+	    	this.http.post(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.login.userId, this.product).subscribe(success => {
 	    		if(success.message.type=='success'){
-	          		this.router.navigate(['/categories']);
+	          		this.router.navigate(['/products']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -101,20 +96,20 @@ export class CategoriesEditComponent implements OnInit {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
   			this.ans = confirm('Are you sure,you want to  delete?');
-        if(this.ans==true){
-          this.http.delete(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id, this.category).subscribe(success => {
-  	        	if(success.message.type=='success'){
-  	          		this.router.navigate(['/categories']);
-  	        	} else {
-  	          		this.errorMessage = success.message.msg;
-  	          		return false;  
-  	        	}
+        	if(this.ans==true){
+          		this.http.delete(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id, this.product).subscribe(success => {
+  	        		if(success.message.type=='success'){
+  	          			this.router.navigate(['/products']);
+  	        		} else {
+  	          			this.errorMessage = success.message.msg;
+  	          			return false;  
+  	        		}
     			});
-        }
+        	}
   		}
   	}
   	
   	doCancel(){
-  		this.router.navigate(['/categories']);
+  		this.router.navigate(['/products']);
   	}
 }

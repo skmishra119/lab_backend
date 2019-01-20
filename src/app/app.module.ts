@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { DataTablesModule } from 'angular-datatables';
+import { ModalModule } from 'angular-custom-modal';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -25,6 +26,10 @@ import { CategoriesEditComponent } from './categories/categories-edit/categories
 import { UsersEditComponent } from './users/users-edit/users-edit.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorsEditComponent } from './doctors/doctors-edit/doctors-edit.component';
+import { PatientsComponent } from './patients/patients.component';
+import { PatientsEditComponent } from './patients/patients-edit/patients-edit.component';
+import { ProductsEditComponent } from './products/products-edit/products-edit.component';
+import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +46,17 @@ import { DoctorsEditComponent } from './doctors/doctors-edit/doctors-edit.compon
     CategoriesEditComponent,
     UsersEditComponent,
     DoctorsComponent,
-    DoctorsEditComponent
+    DoctorsEditComponent,
+    PatientsComponent,
+    PatientsEditComponent,
+    ProductsEditComponent,
+    ItemsEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ModalModule,
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule

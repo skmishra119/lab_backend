@@ -5,26 +5,23 @@ import { AuthService } from '../shared/services/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../shared/services/session.service';
 
-class Doctor {
+class Patient {
   id: string;
   fullname:string;
   email_id: string;
-  clinic: string;
   address: string;
   mobile: string;
   updated: string;
 }
 
 @Component({
-  selector: 'app-doctors',
-  templateUrl: './doctors.component.html',
-  styleUrls: ['./doctors.component.css']
+  selector: 'app-patients',
+  templateUrl: './patients.component.html',
+  styleUrls: ['./patients.component.css']
 })
-export class DoctorsComponent implements OnInit {
-    modalRef: BsModalRef;
-    message: string;
-	  ans = false;
-    data: any = [];
+export class PatientsComponent implements OnInit {
+  ans =  false;
+  data: any = [];
     dtOptions: DataTables.Settings = {};
   	constructor(
   		private conf: Config,
@@ -34,35 +31,31 @@ export class DoctorsComponent implements OnInit {
       	private router: Router, 
       	private route: ActivatedRoute) {
         this.login= this.sessionService.getItem('userClaim');
-        this.http.get(this.conf.apiPath+'api/doctors/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
-        this.data=uData;
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 10,
-          processing: true
-        };
-      });
-    }
-
-  	ngOnInit() {
-		  this.login= this.sessionService.getItem('userClaim');
-      this.http.get(this.conf.apiPath+'api/doctors/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
-        this.data=uData;
-        this.dtOptions = {
+        this.http.get(this.conf.apiPath+'api/patients/'+this.login.lab_id+'::'+this.login.userId).subscribe(  uData => {
+          this.data=uData;
+          this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
             processing: true
           };
-      });
-      console.log(data);  	
-  	}
-
-    someClickHandler(info: any) {
-      this.router.navigate(['edit',  info.id], {relativeTo: this.route});
+      }); 
     }
 
-    onNewDoctor() {
-      this.router.navigate(['new'], {relativeTo: this.route}); 
+  	ngOnInit() {
+		  this.login= this.sessionService.getItem('userClaim');
+    	this.http.get(this.conf.apiPath+'api/patients/'+this.login.lab_id+'::'+this.login.userId).subscribe(	uData => {
+        	this.data=uData;
+        	this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 10,
+            processing: true
+          };
+    	});
+    	console.log(data);  	
+  	}
+
+    onNewPatient() {
+      	this.router.navigate(['new'], {relativeTo: this.route}); 
     }
 
     onEditRecord(id: string){
@@ -72,24 +65,15 @@ export class DoctorsComponent implements OnInit {
     onDeleteRecord(id: string){
       this.ans = confirm('Are you sure, you want to delete?')
       if(this.ans==true){
-        this.http.delete(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+id, this.doctor).subscribe(success => {
+      	this.login= this.sessionService.getItem('userClaim');
+        this.http.delete(this.conf.apiPath+'api/patient/'+this.login.lab_id+'::'+id, this.patient).subscribe(success => {
           if(success.message.type=='success'){
-            this.router.navigate(['/doctors']);
+            this.router.navigate(['/patients']);
           } else {
             this.errorMessage = success.message.msg;
             return false;  
           }
         });
       }
-    }
-    
-    confirm(): void {
-      this.message = 'Confirmed!';
-      this.modal.hide();
-    }
- 
-    decline(): void {
-      this.message = 'Declined!';
-      this.modalRef.hide();
     }
 }

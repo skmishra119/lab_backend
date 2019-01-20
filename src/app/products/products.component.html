@@ -1,6 +1,57 @@
 <div class="jumbotron">
   <div class="container">
-    <h1>Products</h1>
-    <p>Some text that represents "Me"...</p>
+    <div class="content-header">
+      <h4>Products</h4>
+      <div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="btn-toolbar" role="toolbar"> 
+              <div class="btn-group"> 
+                <button type="button" class="btn btn-default" title="new Product" alt="New Product" (click)="onNewProduct()"> 
+                  <span class="glyphicon glyphicon-plus"></span> 
+                </button>
+              </div> 
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
+  		<thead>
+    		<tr>
+      			<th>Name</th>
+      			<th>Description</th>
+      			<th>Category</th>
+      			<th>Updated  On</th>
+            <th>Controls</th>
+    		</tr>
+  		</thead>
+  		<tbody>
+   			<tr *ngFor="let prd of data">
+         		<td>{{prd.name}}</td>
+         		<td>{{prd.description}}</td>
+         		<td>{{prd.category}}</td>
+            	<td>{{prd.updated}}</td>
+            	<td>
+              	<button type="button" class="btn btn-default" title="Edit Product" alt="Edit Product" (click)="onEditRecord(prd.id)">
+                <span class="glyphicon glyphicon-edit"></span> 
+              </button>
+              <button type="button" class="btn btn-default" title="Delete Product" alt="Delete Product" (click)="onDeleteRecord(prd.id)"> 
+                <span class="glyphicon glyphicon-trash"></span> 
+              </button>
+            </td>
+     		</tr>
+  		</tbody>
+	</table>
   </div>
 </div>
+<modal #componentInsideModal>
+  <ng-template #modalHeader><h2>Component inside modal</h2></ng-template>
+  <ng-template #modalBody>
+    <p>Do you want to confirm?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+  </ng-template>
+  <ng-template #modalFooter></ng-template>
+</modal>

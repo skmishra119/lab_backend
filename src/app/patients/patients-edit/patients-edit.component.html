@@ -3,8 +3,8 @@
 	    <div class="jumbotron">
 		  	<div class="container">
 		    	<div class="content-header">
-		      		<h4>Doctor</h4>
-		      		<form name="doctorForm" #doctorForm="ngForm" (ngSubmit)="doctorForm.form.valid && doSubmit()" novalidate>
+		      		<h4>Patient</h4>
+		      		<form name="patForm" #patForm="ngForm" (ngSubmit)="patForm.form.valid && doSubmit()" novalidate>
 		      			<div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
 		        			<ul class="nav navbar-nav navbar-right">
 		          				<li>
@@ -31,7 +31,7 @@
 			    			<div class="col-sm-2 col-md-2">
 			    				<div class="form-group">
 			        				<label>Title*</label>
-			          				<select type="text" name="title" #title="ngModel" [(ngModel)]="doctor.title" class="form-control" required>
+			          				<select type="text" name="title" #title="ngModel" [(ngModel)]="patient.title" class="form-control" required>
 					            		<option value="">Select One</option>
 					            		<option value="Mr.">Mr.</option>
 					            		<option value="Miss">Miss</option>
@@ -39,72 +39,66 @@
 					            		<option value="Dr.">Dr.</option>
 					            		<option value="Prof.">Prof.</option>
 					          		</select>
-					          		<span *ngIf="title.invalid && title.touched || (title.invalid && doctorForm.submitted)" style="color:red">Title is required</span>
+					          		<span *ngIf="title.invalid && title.touched || (title.invalid && patForm.submitted)" style="color:red">Title is required</span>
 					        	</div>
 					    	</div>
 					    	<div class="col-sm-5 col-md-5">
 				    		   	<div class="form-group">
 						        	<label>First Name*</label>
-						          	<input type="text" name="first_name" #first_name="ngModel" [(ngModel)]="doctor.first_name" class="form-control"
+						          	<input type="text" name="first_name" #first_name="ngModel" [(ngModel)]="patient.first_name" class="form-control"
 						            required>
-						          	<span *ngIf="first_name.invalid && first_name.touched || (first_name.invalid && doctorForm.submitted)" style="color:red">First name is required</span>
+						          	<span *ngIf="first_name.invalid && first_name.touched || (first_name.invalid && patForm.submitted)" style="color:red">First name is required</span>
 						        </div>
 						    </div>
 					
 						    <div class="col-sm-5 col-md-5">
 				    	        <div class="form-group">
 						        	<label>Last Name*</label>
-						          	<input type="text" name="last_name" #last_name="ngModel" [(ngModel)]="doctor.last_name" class="form-control"
+						          	<input type="text" name="last_name" #last_name="ngModel" [(ngModel)]="patient.last_name" class="form-control"
 						            required>
-						          	<span *ngIf="last_name.invalid && last_name.touched || (last_name.invalid && doctorForm.submitted)" style="color:red">Last name is required</span>
+						          	<span *ngIf="last_name.invalid && last_name.touched || (last_name.invalid && patForm.submitted)" style="color:red">Last name is required</span>
 						        </div>
 						    </div>
 						</div>
 						<div class="row">
 							<div class="col-sm-6 col-md-6">
 				        		<div class="form-group">
-				        			<label>Email Address*</label>
-				          			<input type="text" name="email_id" #email_id="ngModel" [(ngModel)]="doctor.email_id" class="form-control" required>
-				          			<span *ngIf="email_id.invalid && email_id.touched || (email_id.invalid && doctorForm.submitted)" style="color:red">Email address is required</span>
+				        			<label>Email Address</label>
+				          			<input type="text" name="email_id" #email_id="ngModel" [(ngModel)]="patient.email_id" class="form-control">
+				          			<!--<span *ngIf="email_id.invalid && email_id.touched || (email_id.invalid && patForm.submitted)" style="color:red">Email address is required</span>-->
 				        		</div>
 				        	</div>
 				        	<div class="col-sm-6 col-md-6">
 						        <div class="form-group">
 				        			<label>Contact Number</label>
-				          			<input type="text" name="mobile" #mobile="ngModel" [(ngModel)]="doctor.mobile" class="form-control">
+				          			<input type="text" name="mobile" #mobile="ngModel" [(ngModel)]="patient.mobile" class="form-control">
 				        		</div>
 						    </div>
 						</div>
 						<div class="row">
-							<div class="col-sm-6 col-md-6">
-								<div class="form-group">
-						        	<label>Clinic Name</label>
-						          	<input type="text" name="clinic" #clinic="ngModel" [(ngModel)]="doctor.clinic" class="form-control">
-						        </div>
-						    </div>
-						    <div class="col-sm-6 col-md-6">
+							<div class="col-sm-12 col-md-12">
 						       	<div class="form-group">
-				        			<label>Clinic Address</label>
-				          			<input type="text" name="address" #address="ngModel" [(ngModel)]="doctor.address" class="form-control">
+				        			<label>Address</label>
+				          			<input type="text" name="address" #address="ngModel" [(ngModel)]="patient.address" class="form-control">
 				        		</div>
-				        	</div>
+			        		</div>
 				        </div>
 				        <div class="row">
 				        	<div class="col-sm-6 col-md-6">
 						        <div class="form-group">
 						        	<label>City</label>
-						          	<input type="text" name="city" #city="ngModel" [(ngModel)]="doctor.city" class="form-control">
+						          	<input type="text" name="city" #city="ngModel" [(ngModel)]="patient.city" class="form-control">
 						        </div>
 				        	</div>
 				        	<div class="col-sm-6 col-md-6">
 								<div class="form-group">
 						          	<label>Status*</label>
-						          	<select type="text" name="status" #status="ngModel" [(ngModel)]="doctor.status" class="form-control" required>
+						          	<select type="text" name="status" #status="ngModel" [(ngModel)]="patient.status" class="form-control" required>
 						            	<option value="">Select One</option>
 						            	<option value="ACTIVE">ACTIVE</option>
 						            	<option value="DELETED">DELETED</option>
 						          	</select>
-						          	<span *ngIf="status.invalid && status.touched || (status.invalid && doctorForm.submitted)" style="color:red">Select
+						          	<span *ngIf="status.invalid && status.touched || (status.invalid && patForm.submitted)" style="color:red">Select
 						            Status</span>
 						        </div>
 						    </div>

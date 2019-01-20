@@ -7,23 +7,21 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../../shared/services/session.service';
 
 @Component({
-  selector: 'app-doctors-edit',
-  templateUrl: './doctors-edit.component.html',
-  styleUrls: ['./doctors-edit.component.css']
+  selector: 'app-patients-edit',
+  templateUrl: './patients-edit.component.html',
+  styleUrls: ['./patients-edit.component.css']
 })
-export class DoctorsEditComponent implements OnInit {
+export class PatientsEditComponent implements OnInit {
 	id: string;
     editMode = false;
-    ans = false;
-  	doctorForm: FormGroup;
+  	patForm: FormGroup;
 	login: any = [];
 
-	doctor: any = {
+	patient: any = {
       	title: '',
     	first_name: '',
     	last_name: '',
     	email_id: '',
-    	clinic: '',
     	address: '',
     	city: '',
     	mobile: '',
@@ -49,9 +47,9 @@ export class DoctorsEditComponent implements OnInit {
           		this.editMode = params['recId'] != null;
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
-		      		this.http.get(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
+		      		this.http.get(this.conf.apiPath+'api/patient/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
 		      			if(editData.message.type=='success'){
-		      				this.doctor = editData.data[0];
+		      				this.patient = editData.data[0];
 	        			}
 		    		});
 		      	}
@@ -63,9 +61,9 @@ export class DoctorsEditComponent implements OnInit {
   	doSubmit() {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-      	this.http.put(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id, this.doctor).subscribe(success => {
+  			this.http.put(this.conf.apiPath+'api/patient/'+this.login.lab_id+'::'+this.id, this.patient).subscribe(success => {
 	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/doctors']);
+	          		this.router.navigate(['/patients']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -73,9 +71,9 @@ export class DoctorsEditComponent implements OnInit {
 	    	});
 	    } else {
 	    	//console.log(this.user);
-	    	this.http.post(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.login.userId, this.doctor).subscribe(success => {
+	    	this.http.post(this.conf.apiPath+'api/patient/'+this.login.lab_id+'::'+this.login.userId, this.patient).subscribe(success => {
 	    		if(success.message.type=='success'){
-	          		this.router.navigate(['/doctors']);
+	          		this.router.navigate(['/patients']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -87,11 +85,11 @@ export class DoctorsEditComponent implements OnInit {
   	doDelete(){
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-  			this.ans = confirm('Are you sure,you want to  delete?');
-        if(this.ans==true){
-          this.http.delete(this.conf.apiPath+'api/doctor/'+this.login.lab_id+'::'+this.id, this.doctor).subscribe(success => {
+        ans = confirm('Are you sure,you want to  delete?');
+        if(ans==true){
+          this.http.delete(this.conf.apiPath+'api/patient/'+this.login.lab_id+'::'+this.id, this.patient).subscribe(success => {
 	        	if(success.message.type=='success'){
-	          		this.router.navigate(['/doctors']);
+	          		this.router.navigate(['/patients']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
@@ -102,6 +100,6 @@ export class DoctorsEditComponent implements OnInit {
   	}
   	
   	doCancel(){
-  		this.router.navigate(['/doctors']);
+  		this.router.navigate(['/patients']);
   	}
 }

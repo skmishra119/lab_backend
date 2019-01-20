@@ -87,14 +87,17 @@ export class UsersEditComponent implements OnInit {
   	doDelete(){
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-  			this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
+        ans = confirm('Are you sure,you want to  delete?');
+        if(ans==true){
+        	this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
 	        	if(success.message.type=='success'){
 	          		this.router.navigate(['/users']);
 	        	} else {
 	          		this.errorMessage = success.message.msg;
 	          		return false;  
 	        	}
-  			});
+  			  });
+        }
   		}
   	}
   	
