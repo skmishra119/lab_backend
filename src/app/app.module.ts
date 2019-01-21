@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { DataTablesModule } from 'angular-datatables';
-import { ModalModule } from 'angular-custom-modal';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -56,7 +55,6 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ModalModule,
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule

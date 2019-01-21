@@ -15,6 +15,7 @@ import { SessionService } from '../../shared/services/session.service';
 export class UsersEditComponent implements OnInit {
     id: string;
     editMode = false;
+    ans = false;
   	userForm: FormGroup;
 	  login: any = [];
     roles: any = [];
@@ -87,8 +88,8 @@ export class UsersEditComponent implements OnInit {
   	doDelete(){
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
-        ans = confirm('Are you sure,you want to  delete?');
-        if(ans==true){
+        this.ans = confirm('Are you sure,you want to  delete?');
+        if(this.ans==true){
         	this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
 	        	if(success.message.type=='success'){
 	          		this.router.navigate(['/users']);

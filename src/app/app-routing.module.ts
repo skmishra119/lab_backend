@@ -14,6 +14,8 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesEditComponent } from './categories/categories-edit/categories-edit.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products/products-edit/products-edit.component';
+import { ItemsComponent } from './items/items.component';
+import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 
 import { OrdersComponent } from './orders/orders.component';
 
@@ -43,6 +45,10 @@ const routes: Routes = [
   { path: 'products/edit/:recId', component: ProductsEditComponent },
 
   { path: 'items', component: ItemsComponent },
+  { path: 'items/new', component: ItemsEditComponent },
+  { path: 'items/edit/:recId', component: ItemsEditComponent },
+
+
   { path: 'orders', component: OrdersComponent }
 ];
 

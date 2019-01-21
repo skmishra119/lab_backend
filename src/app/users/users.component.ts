@@ -14,7 +14,6 @@ class Person {
   updated: string;
 }
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -24,7 +23,7 @@ class Person {
 
 export class UsersComponent implements OnInit {
     login: any = [];
-	  data = [];
+	  data: any = [];
     ans = false;
     dtOptions: DataTables.Settings = {};
   	
@@ -60,6 +59,7 @@ export class UsersComponent implements OnInit {
    	}
 
     onNewUser() {
+      //swal.fire('The Internet?','That thing is still around?','question');
       this.router.navigate(['new'], {relativeTo: this.route}); 
     }
 
@@ -70,7 +70,8 @@ export class UsersComponent implements OnInit {
     onDeleteRecord(id: string){
       this.ans = confirm('Are you sure, you want to delete?')
       if(this.ans==true){
-        this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+id, this.user).subscribe(success => {
+        this.login= this.sessionService.getItem('userClaim');
+        this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+id).subscribe(success => {
           if(success.message.type=='success'){
             this.router.navigate(['/users']);
           } else {

@@ -82,14 +82,4 @@ export class DoctorsComponent implements OnInit {
         });
       }
     }
-    
-    confirm(): void {
-      this.message = 'Confirmed!';
-      this.modal.hide();
-    }
- 
-    decline(): void {
-      this.message = 'Declined!';
-      this.modalRef.hide();
-    }
 }

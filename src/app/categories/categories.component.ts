@@ -24,11 +24,11 @@ export class CategoriesComponent implements OnInit {
     dtOptions: DataTables.Settings = {};
   	constructor(
   		private conf: Config,
-      	private authService: AuthService, 
-      	private sessionService: SessionService, 
-      	private http: HttpClient, 
-      	private router: Router, 
-      	private route: ActivatedRoute) {
+      private authService: AuthService, 
+      private sessionService: SessionService, 
+      private http: HttpClient, 
+      private router: Router, 
+      private route: ActivatedRoute) {
         this.login= this.sessionService.getItem('userClaim');
         this.http.get(this.conf.apiPath+'api/categories/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
         this.data=uData;
@@ -44,7 +44,7 @@ export class CategoriesComponent implements OnInit {
 		  this.login= this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/categories/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
         this.data=uData;
-        console.log(this.data);
+        //console.log(this.data);
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: 10,
@@ -78,15 +78,5 @@ export class CategoriesComponent implements OnInit {
           }
         });
       }
-    }
-    
-    confirm(): void {
-      this.message = 'Confirmed!';
-      this.modal.hide();
-    }
- 
-    decline(): void {
-      this.message = 'Declined!';
-      this.modalRef.hide();
     }
 }

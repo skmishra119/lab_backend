@@ -47,17 +47,17 @@ export class ItemsComponent implements OnInit {
     }
 
   	ngOnInit() {
-		this.login= this.sessionService.getItem('userClaim');
-      	this.http.get(this.conf.apiPath+'api/items/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
-        	this.data=uData;
-        	console.log(this.data);
-        	this.dtOptions = {
-            	pagingType: 'full_numbers',
-            	pageLength: 10,
-            	processing: true
-          	};
-      	});
-      	console.log(data);  	
+		  this.login= this.sessionService.getItem('userClaim');
+      this.http.get(this.conf.apiPath+'api/items/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
+       	this.data=uData;
+       	//console.log(this.data);
+       	this.dtOptions = {
+         	pagingType: 'full_numbers',
+         	pageLength: 10,
+         	processing: true
+       	};
+      });
+      console.log(data);  	
   	}
 
     onNewItem() {
@@ -80,15 +80,5 @@ export class ItemsComponent implements OnInit {
           }
         });
       }
-    }
-    
-    confirm(): void {
-      this.message = 'Confirmed!';
-      this.modal.hide();
-    }
- 
-    decline(): void {
-      this.message = 'Declined!';
-      this.modalRef.hide();
     }
 }
