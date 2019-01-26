@@ -13,26 +13,26 @@ import { SessionService } from '../../shared/services/session.service';
 })
 export class CategoriesEditComponent implements OnInit {
 
-	id: string;
+  id: string;
   editMode = false;
   ans = false;
   catForm: FormGroup;
 	login: any = [];
+  result: any = [];
+  errorMessage= '';
 
 	category: any = {
       name: '',
     	description: '',
     	parent_id: '',
     	status: ''
-  	};
+  };
 
     pCat: any =  [];
 
-  	errorMessage: string;
-
-  	constructor(
+   	constructor(
   		private conf: Config,
-      	private authService: AuthService, 
+     	private authService: AuthService, 
   		private sessionService: SessionService, 
   		private http: HttpClient,
   		private route: ActivatedRoute,
@@ -40,9 +40,9 @@ export class CategoriesEditComponent implements OnInit {
     ) {
       this.login = this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/categories/parent/'+this.login.lab_id+'::0').subscribe(pCatData => {
-      
-        if(pCatData.message.type=='success'){
-          this.pCat = pCatData.data;
+        this.result = pCatData;    
+        if(this.result.message.type=='success'){
+          this.pCat = this.result.data;
         }
       });
      }
@@ -50,8 +50,9 @@ export class CategoriesEditComponent implements OnInit {
   	ngOnInit() {
       this.login = this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/categories/parent/'+this.login.lab_id+'::0').subscribe(pCatData => {
-        if(pCatData.message.type=='success'){
-          this.pCat = pCatData.data;
+        this.result = pCatData;
+        if(this.result.message.type=='success'){
+          this.pCat = this.result.data;
         }
       });
 
@@ -63,8 +64,9 @@ export class CategoriesEditComponent implements OnInit {
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
 		      		  this.http.get(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
-                if(editData.message.type=='success'){
-		      				this.category = editData.data[0];
+                  this.result = editData;
+                if(this.result.message.type=='success'){
+		      				this.category = this.result.data[0];
 	        			}
 		    		});
 		      	}
@@ -77,20 +79,22 @@ export class CategoriesEditComponent implements OnInit {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
   			this.http.put(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id, this.category).subscribe(success => {
-	        	if(success.message.type=='success'){
+            this.result =success;
+	        	if(this.result.message.type=='success'){
 	          		this.router.navigate(['/categories']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
 	    } else {
 	    	//console.log(this.user);
 	    	this.http.post(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.login.userId, this.category).subscribe(success => {
-	    		if(success.message.type=='success'){
+          this.result = success;
+	    		if(this.result.message.type=='success'){
 	          		this.router.navigate(['/categories']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
@@ -103,10 +107,11 @@ export class CategoriesEditComponent implements OnInit {
   			this.ans = confirm('Are you sure,you want to  delete?');
         if(this.ans==true){
           this.http.delete(this.conf.apiPath+'api/category/'+this.login.lab_id+'::'+this.id, this.category).subscribe(success => {
-  	        	if(success.message.type=='success'){
+            this.result =  success;
+  	        	if(this.result.message.type=='success'){
   	          		this.router.navigate(['/categories']);
   	        	} else {
-  	          		this.errorMessage = success.message.msg;
+  	          		this.errorMessage = this.result.message.msg;
   	          		return false;  
   	        	}
     			});

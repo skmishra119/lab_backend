@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   	ngOnInit() {
   		if(this.authService.isAuthorised()) {
   			this.user =  this.sessionService.getItem('userClaim');
-  			console.log(this.sessionService.getItem('userClaim'));
+  			//console.log(this.sessionService.getItem('userClaim'));
   		}
   	}
 

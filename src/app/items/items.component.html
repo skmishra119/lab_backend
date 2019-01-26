@@ -17,36 +17,6 @@
       </div>
     </div>
     <hr/>
-    <table class="table table-striped table-bordered table-sm row-border hover" datatable [dtOptions]="dtOptions">
-  		<thead>
-    		<tr>
-      			<th>Name</th>
-      			<th>Product</th>
-      			<th>Description</th>
-      			<th>Unit</th>
-      			<th>Min - Max</th>
-      			<th>Updated  On</th>
-            <th>Controls</th>
-    		</tr>
-  		</thead>
-  		<tbody>
-   			<tr *ngFor="let itm of data">
-         		<td>{{itm.name}}</td>
-         		<td>{{itm.product}}</td>
-         		<td>{{itm.description}}</td>
-         		<td>{{itm.unit}}</td>
-         		<td>{{itm.minval}} - {{itm.maxval}} {{itm.unit}}</td>
-            	<td>{{itm.updated}}</td>
-            	<td>
-              	<button type="button" class="btn btn-default" title="Edit Item" alt="Edit Item" (click)="onEditRecord(itm.id)">
-                <span class="glyphicon glyphicon-edit"></span> 
-              </button>
-              <button type="button" class="btn btn-default" title="Delete Item" alt="Delete Item" (click)="onDeleteRecord(itm.id)"> 
-                <span class="glyphicon glyphicon-trash"></span> 
-              </button>
-            </td>
-     		</tr>
-  		</tbody>
-	</table>
+    <jqxDataTable [width]="'100%'" [source]="dataAdapter" [columns]="columns" [altRows]="true" [pageable]="true" [filterable]="true" [pagerButtonsCount]="10" [filterMode]="'simple'" [pageable]="true" [sortable]="true" [pageSize]="10"></jqxDataTable>
   </div>
 </div>

@@ -19,6 +19,10 @@ export class UsersEditComponent implements OnInit {
   	userForm: FormGroup;
 	  login: any = [];
     roles: any = [];
+
+    result: any = [];
+    errorMessage= '';
+    
 	
     user: any = {
       title: '',
@@ -51,8 +55,9 @@ export class UsersEditComponent implements OnInit {
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
 		      		this.http.get(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
-		      			if(editData.message.type=='success'){
-		      				this.user = editData.data[0];
+                this.result = editData;
+		      			if(this.result.message.type=='success'){
+		      				this.user = this.result.data[0];
 	        			}
 		    		});
 		      	}
@@ -65,20 +70,22 @@ export class UsersEditComponent implements OnInit {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
   			this.http.put(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
-	        	if(success.message.type=='success'){
+            this.result = success;
+	        	if(this.result.message.type=='success'){
 	          		this.router.navigate(['/users']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
 	    } else {
 	    	//console.log(this.user);
 	    	this.http.post(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.login.userId, this.user).subscribe(success => {
-	        	if(success.message.type=='success'){
+            this.result = success;
+	        	if(this.result.message.type=='success'){
 	          		this.router.navigate(['/users']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
@@ -91,10 +98,11 @@ export class UsersEditComponent implements OnInit {
         this.ans = confirm('Are you sure,you want to  delete?');
         if(this.ans==true){
         	this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+this.id, this.user).subscribe(success => {
-	        	if(success.message.type=='success'){
+            this.result = success;
+	        	if(this.result.message.type=='success'){
 	          		this.router.navigate(['/users']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
   			  });

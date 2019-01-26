@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     lab_id:''
   };
 
+  result: any = [];
   labs: any = [];
   //[{"id":"","alias":"","name":"Select  One"}];
 
@@ -39,18 +40,19 @@ export class LoginComponent implements OnInit {
 
   doLogin() {
     this.http.post(this.conf.apiPath+'api/user/auth', this.user).subscribe(success => {
-        if(success.message.type=='success'){
+        this.result = success;
+        if(this.result.message.type=='success'){
           this.errorMessage='';
-          this.authService.userClaim.token = success.data[0].token;
-          this.authService.userClaim.userId = success.data[0].id;
-          this.authService.userClaim.fullName = success.data[0].fullname;
-          this.authService.userClaim.lab_id = success.data[0].lab_id;
+          this.authService.userClaim.token = this.result.data[0].token;
+          this.authService.userClaim.userId = this.result.data[0].id;
+          this.authService.userClaim.fullName = this.result.data[0].fullname;
+          this.authService.userClaim.lab_id = this.result.data[0].lab_id;
           this.authService.userClaim.isAuthenticated = true;
           this.sessionService.addItem('userClaim', this.authService.userClaim);
           //console.log(this.sessionService.getItem('userClaim'));
           this.router.navigate(['/dashboard']);
         } else {
-          this.errorMessage = success.message.msg;
+          this.errorMessage = this.result.message.msg;
           return false;  
         }
     });

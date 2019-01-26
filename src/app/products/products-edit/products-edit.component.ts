@@ -15,9 +15,11 @@ import { SessionService } from '../../shared/services/session.service';
 export class ProductsEditComponent implements OnInit {
 	id: string;
 	editMode = false;
-  	ans = false;
-  	patForm: FormGroup;
+  ans = false;
+  patForm: FormGroup;
 	login: any = [];
+  result: any = [];
+  errorMessage= '';
 
 	product: any = {
     	name: '',
@@ -28,16 +30,14 @@ export class ProductsEditComponent implements OnInit {
 
     pCat: any =  [];
 
-	errorMessage: string;
 
   	constructor(
   		private conf: Config,
-      	private authService: AuthService, 
+      private authService: AuthService, 
   		private sessionService: SessionService, 
   		private http: HttpClient,
   		private route: ActivatedRoute,
-      	private router: Router
-    ) {
+      private router: Router) {
       this.login = this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/categories/'+this.login.lab_id+'::'+this.login.userId).subscribe(pCatData => {
           this.pCat = pCatData;
@@ -58,8 +58,9 @@ export class ProductsEditComponent implements OnInit {
           		this.login = this.sessionService.getItem('userClaim');
           		if(this.editMode){
 		      		this.http.get(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
-                		if(editData.message.type=='success'){
-		      				this.product = editData.data[0];
+                this.result = editData;
+                		if(this.result.message.type=='success'){
+		      				this.product = this.result.data[0];
 	        			}
 		    		});
 		      	}
@@ -72,20 +73,22 @@ export class ProductsEditComponent implements OnInit {
   		this.login = this.sessionService.getItem('userClaim');
   		if (this.editMode) {
   			this.http.put(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id, this.product).subscribe(success => {
-	        	if(success.message.type=='success'){
+          this.result = success;
+	        	if(this.result.message.type=='success'){
 	          		this.router.navigate(['/products']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
 	    } else {
 	    	//console.log(this.user);
 	    	this.http.post(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.login.userId, this.product).subscribe(success => {
-	    		if(success.message.type=='success'){
+          this.result = success;
+	    		if(this.result.message.type=='success'){
 	          		this.router.navigate(['/products']);
 	        	} else {
-	          		this.errorMessage = success.message.msg;
+	          		this.errorMessage = this.result.message.msg;
 	          		return false;  
 	        	}
 	    	});
@@ -98,10 +101,11 @@ export class ProductsEditComponent implements OnInit {
   			this.ans = confirm('Are you sure,you want to  delete?');
         	if(this.ans==true){
           		this.http.delete(this.conf.apiPath+'api/product/'+this.login.lab_id+'::'+this.id, this.product).subscribe(success => {
-  	        		if(success.message.type=='success'){
+                this.result = success;
+  	        		if(this.result.message.type=='success'){
   	          			this.router.navigate(['/products']);
   	        		} else {
-  	          			this.errorMessage = success.message.msg;
+  	          			this.errorMessage = this.result.message.msg;
   	          			return false;  
   	        		}
     			});

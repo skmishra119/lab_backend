@@ -5,6 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { DataTablesModule } from 'angular-datatables';
+
+import { jqxGridComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid';
+import { jqxCalendarComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxcalendar';
+import { jqxDateTimeInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxdatetimeinput';
+import { jqxDataTableComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxdatatable';
+
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -29,6 +36,9 @@ import { PatientsComponent } from './patients/patients.component';
 import { PatientsEditComponent } from './patients/patients-edit/patients-edit.component';
 import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 import { ItemsEditComponent } from './items/items-edit/items-edit.component';
+import { CollectorsComponent } from './collectors/collectors.component';
+import { CollectorsEditComponent } from './collectors/collectors-edit/collectors-edit.component';
+import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +59,14 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
     PatientsComponent,
     PatientsEditComponent,
     ProductsEditComponent,
-    ItemsEditComponent
+    ItemsEditComponent,
+    CollectorsComponent,
+    CollectorsEditComponent,
+    OrdersEditComponent,
+    jqxGridComponent,
+    jqxCalendarComponent,
+    jqxDateTimeInputComponent,
+    jqxDataTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +74,7 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
   ],
   providers: [
     Config, SessionService, HelperService, AuthService, CookieService,

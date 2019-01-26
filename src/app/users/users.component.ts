@@ -25,8 +25,12 @@ export class UsersComponent implements OnInit {
     login: any = [];
 	  data: any = [];
     ans = false;
-    dtOptions: DataTables.Settings = {};
-  	
+    result: any = [];
+    errorMessage= '';
+    dataAdapter: any = [];
+    source: any = [];
+    columns: any = [];
+
     constructor(
       private conf: Config,
       private authService: AuthService, 
@@ -34,32 +38,40 @@ export class UsersComponent implements OnInit {
       private http: HttpClient, 
       private router: Router, 
       private route: ActivatedRoute) {
-      this.login= this.sessionService.getItem('userClaim');
-      this.http.get(this.conf.apiPath+'api/users/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
-        this.data = uData;
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 10,
-          processing: true
-        };
-      }, error => console.error(error));
     }
 
   	ngOnInit() {
       this.login= this.sessionService.getItem('userClaim');
       this.http.get(this.conf.apiPath+'api/users/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
         this.data = uData;
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          pageLength: 10,
-          processing: true
-        };
+        this.source = {
+          localData: this.data,
+          dataType: 'json',
+          dataFields:
+          [
+            { name: 'email_id', type: 'string' },
+            { name: 'role', type: 'string' },
+            { name: 'fullname', type: 'string' },
+            { name: 'updated', type: 'string' },
+            { name: 'user_id', type: 'string' }
+          ]
+        };    
+        this.dataAdapter = new jqx.dataAdapter(this.source);
+        this.columns =
+        [
+          { text: 'Email Id', dataField: 'email_id', cellsRenderer: (row: any, column: any, value: any, rowData: any): string => {
+            let retval = '<a href="users/edit/'+rowData.user_id+'">'+rowData.email_id+'</a>';
+                return retval;
+            }
+          },
+          { text: 'Role', dataField: 'role'},
+          { text: 'Full Name', dataField: 'fullname'},
+          { text: 'Updated', dataField: 'updated'}
+        ];
       }, error => console.error(error));
-      console.log(data);
    	}
 
     onNewUser() {
-      //swal.fire('The Internet?','That thing is still around?','question');
       this.router.navigate(['new'], {relativeTo: this.route}); 
     }
 
@@ -72,10 +84,11 @@ export class UsersComponent implements OnInit {
       if(this.ans==true){
         this.login= this.sessionService.getItem('userClaim');
         this.http.delete(this.conf.apiPath+'api/user/'+this.login.lab_id+'::'+id).subscribe(success => {
-          if(success.message.type=='success'){
+          this.result = success;
+          if(this.result.message.type=='success'){
             this.router.navigate(['/users']);
           } else {
-            this.errorMessage = success.message.msg;
+            this.errorMessage = this.result.message.msg;
             return false;  
           }
         });

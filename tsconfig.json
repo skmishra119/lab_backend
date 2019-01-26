@@ -18,5 +18,13 @@
       "es2018",
       "dom"
     ]
-  }
+  },"include": [
+    "src/**/*"
+  ],
+  "files": [
+    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxgrid.ts",
+    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxcalendar.ts",
+    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxdatetimeinput.ts",
+    "node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxdatatable.ts"
+  ]
 }
