@@ -62,10 +62,6 @@ export class CategoriesComponent implements OnInit {
       }, error => console.error(error));
   	}
 
-    someClickHandler(info: any) {
-      this.router.navigate(['edit',  info.id], {relativeTo: this.route});
-    }
-
     onNewCategory() {
       this.router.navigate(['new'], {relativeTo: this.route}); 
     }

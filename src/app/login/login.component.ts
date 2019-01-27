@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: any = {
+  logUser: any = {
     email_id: '',
     password: '',
     lab_id:''
@@ -19,16 +19,8 @@ export class LoginComponent implements OnInit {
 
   result: any = [];
   labs: any = [];
-  //[{"id":"","alias":"","name":"Select  One"}];
-
+  
   errorMessage: string;
-
-  /*const httpOptions = {
-      headers: new HttpClient({
-        'Content-Type':  'application/json',
-        'Authorization': 'my-auth-token',
-      })
-  };*/
 
   constructor(
     private conf: Config,
@@ -39,7 +31,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   doLogin() {
-    this.http.post(this.conf.apiPath+'api/user/auth', this.user).subscribe(success => {
+    this.http.post(this.conf.apiPath+'api/user/auth', this.logUser).subscribe(success => {
         this.result = success;
         if(this.result.message.type=='success'){
           this.errorMessage='';
@@ -61,9 +53,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if (this.authService.isAuthorised()) {
       this.router.navigate(['/dashboard']);
+    } else {
+      this.http.get(this.conf.apiPath+'api/labs').subscribe(success => {
+        this.labs = success;
+      });
+      return false;
     }
-    this.http.get(this.conf.apiPath+'api/labs').subscribe(success => {
-      this.labs = success;
-    });
   }
 }

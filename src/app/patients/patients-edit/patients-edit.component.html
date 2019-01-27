@@ -5,7 +5,7 @@
 		    	<div class="content-header">
 		      		<h4>Patient</h4>
 		      		<form name="patForm" #patForm="ngForm" (ngSubmit)="patForm.form.valid && doSubmit()" novalidate>
-		      			<div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+		      			<div class="collapse navbar-collapse" id="myNavbar">
 		        			<ul class="nav navbar-nav navbar-right">
 		          				<li>
 		            				<div class="btn-toolbar" role="toolbar"> 
@@ -105,7 +105,7 @@
 						</div>
 			        	<!--<input type="submit" value="Login" class="btn btn-success">-->
 			    	    <hr/>
-			    		<div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+			    		<div class="collapse navbar-collapse" id="myNavbar">
 			        		<ul class="nav navbar-nav navbar-right">
 			          			<li>
 			            			<div class="btn-toolbar" role="toolbar"> 

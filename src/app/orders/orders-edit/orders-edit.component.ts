@@ -149,4 +149,12 @@ export class OrdersEditComponent implements OnInit {
   	doCancel(){
   		this.router.navigate(['/orders']);
   	}
+
+    addProducts(){
+
+    }
+
+    removeProducts(){
+    
+    }
 }

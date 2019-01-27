@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Config } from '../config';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { SessionService } from '../shared/services/session.service';
 
@@ -9,19 +11,29 @@ import { SessionService } from '../shared/services/session.service';
 })
 export class HeaderComponent implements OnInit {
 
-	user: any = [];
-  	constructor(private authService: AuthService,  private sessionService: SessionService) { }
+    logUser: any = [];
+    authorized = false;
+
+  	constructor(
+      private authService: AuthService,  
+      private sessionService: SessionService, 
+      private router: Router, 
+      private route: ActivatedRoute) { 
+    }
 
    	logout() {
     	this.authService.logout();
-    	location.href = './';
+    	this.router.navigate(['/login']);
   	}
 
   	ngOnInit() {
+      this.authorized = this.authService.isAuthorised();
   		if(this.authService.isAuthorised()) {
-  			this.user =  this.sessionService.getItem('userClaim');
-  			//console.log(this.sessionService.getItem('userClaim'));
-  		}
+  			this.logUser =  this.sessionService.getItem('userClaim');
+  		} else {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      }
   	}
 
 }

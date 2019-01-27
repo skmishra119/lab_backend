@@ -22,7 +22,9 @@ export class HelperService {
   // Encrypt data using AES algorithm
   encryptData(data) {
     try {
+      if(data!=null){
       return CryptoJS.AES.encrypt(JSON.stringify(data), 'binlab.bintechsol.com').toString();
+      } else { return data; }
     } catch (e) {
       console.log(e);
     }
@@ -31,11 +33,13 @@ export class HelperService {
   // Decrypt data using AES algorithm
   decryptData(data) {
     try {
+      if(data!=null){
       const bytes = CryptoJS.AES.decrypt(data, 'binlab.bintechsol.com');
       if (bytes.toString()) {
         return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       }
       return data;
+      } else { return data; }
     } catch (e) {
       console.log(e);
     }

@@ -8,9 +8,9 @@
       </button>
       <a class="navbar-brand" href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">binLab</a>
     </div>
-    <div *ngIf="authService.isAuthorised()" class="collapse navbar-collapse" id="myNavbar">
+    <div *ngIf="authorized" class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-      	<li><a href="javascript:void();"><span>Hi, {{user.fullName}}</span></a></li>
+      	<li><a href="javascript:void();"><span>Hi, {{logUser.fullName}}</span></a></li>
         <li><a href="/users" title="Users" alt="Users"><span class="glyphicon glyphicon-user"></span></a></li>
         <li><a href="/doctors" title="Doctors" alt="Doctors"><span class="glyphicon glyphicon-briefcase"></span></a></li>
         <li><a href="/collectors" title="Sample  Collectors" alt="Sample Collectors"><span class="glyphicon glyphicon-pushpin"></span></a></li>
