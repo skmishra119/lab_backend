@@ -51,8 +51,7 @@ export class CategoriesComponent implements OnInit {
         this.columns =
         [
           { text: 'Name', dataField: 'name', cellsRenderer: (row: any, column: any, value: any, rowData: any): string => {
-            let retval = '<a href="categories/edit/'+rowData.id+'">'+rowData.name+'</a>';
-                return retval;
+            return '<a href="categories/edit/'+rowData.id+'">'+rowData.name+'</a>';
             }
           },
           { text: 'Description', dataField: 'description'},

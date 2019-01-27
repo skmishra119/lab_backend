@@ -40,6 +40,8 @@ import { CollectorsComponent } from './collectors/collectors.component';
 import { CollectorsEditComponent } from './collectors/collectors-edit/collectors-edit.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,

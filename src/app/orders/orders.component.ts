@@ -34,6 +34,7 @@ export class OrdersComponent implements OnInit {
 
   	ngOnInit() {
 		    this.login= this.sessionService.getItem('userClaim');
+        console.log(this.conf.apiPath+'api/orders/'+this.login.lab_id+'::'+this.login.userId);
       	this.http.get(this.conf.apiPath+'api/orders/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
        		 this.data=uData;
            this.source = {

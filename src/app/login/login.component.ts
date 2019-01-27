@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
           this.authService.userClaim.isAuthenticated = true;
           this.sessionService.addItem('userClaim', this.authService.userClaim);
           //console.log(this.sessionService.getItem('userClaim'));
-          this.router.navigate(['/dashboard']);
+          //this.router.navigate(['/dashboard']);
+          location.href="./dashboard";
         } else {
           this.errorMessage = this.result.message.msg;
           return false;  
