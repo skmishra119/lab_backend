@@ -16,8 +16,10 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 import { ItemsComponent } from './items/items.component';
 import { ItemsEditComponent } from './items/items-edit/items-edit.component';
+import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'login',pathMatch: 'full' },
@@ -55,6 +57,10 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'orders/new', component: OrdersEditComponent },
   { path: 'orders/edit/:recId', component: OrdersEditComponent },
+
+  { path: 'barcode/generate', component: BarcodeComponent },
+  
+
 
 ];
 

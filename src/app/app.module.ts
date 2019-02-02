@@ -11,6 +11,7 @@ import { jqxCalendarComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqx
 import { jqxDateTimeInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxdatetimeinput';
 import { jqxDataTableComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxdatatable';
 
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -39,6 +40,7 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 import { CollectorsComponent } from './collectors/collectors.component';
 import { CollectorsEditComponent } from './collectors/collectors-edit/collectors-edit.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
+import { BarcodeComponent } from './barcode/barcode.component';
 
 
 
@@ -69,6 +71,7 @@ import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component'
     jqxCalendarComponent,
     jqxDateTimeInputComponent,
     jqxDataTableComponent,
+    BarcodeComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,7 @@ import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component'
     ReactiveFormsModule,
     HttpClientModule,
     DataTablesModule,
+    NgxBarcodeModule,
   ],
   providers: [
     Config, SessionService, HelperService, AuthService, CookieService,
