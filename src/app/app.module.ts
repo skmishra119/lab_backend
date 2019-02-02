@@ -39,6 +39,7 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 import { CollectorsComponent } from './collectors/collectors.component';
 import { CollectorsEditComponent } from './collectors/collectors-edit/collectors-edit.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
+import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
 
 
 
@@ -69,6 +70,7 @@ import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component'
     jqxCalendarComponent,
     jqxDateTimeInputComponent,
     jqxDataTableComponent,
+    OrdersProcessComponent,
   ],
   imports: [
     BrowserModule,

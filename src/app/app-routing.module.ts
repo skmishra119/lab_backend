@@ -18,6 +18,7 @@ import { ItemsComponent } from './items/items.component';
 import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
+import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login',pathMatch: 'full' },
@@ -55,6 +56,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'orders/new', component: OrdersEditComponent },
   { path: 'orders/edit/:recId', component: OrdersEditComponent },
+  { path: 'orders/process/:recId', component: OrdersProcessComponent },
 
 ];
 
