@@ -19,6 +19,7 @@ import { ItemsEditComponent } from './items/items-edit/items-edit.component';
 import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
+import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
 
 
 const routes: Routes = [
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'orders/new', component: OrdersEditComponent },
   { path: 'orders/edit/:recId', component: OrdersEditComponent },
+  { path: 'orders/process/:recId', component: OrdersProcessComponent },
 
   { path: 'barcode/generate', component: BarcodeComponent },
   

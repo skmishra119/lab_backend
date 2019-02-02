@@ -6,12 +6,14 @@ import { AuthService } from '../../shared/services/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../../shared/services/session.service';
 
+
+
 @Component({
-  selector: 'app-orders-edit',
-  templateUrl: './orders-edit.component.html',
-  styleUrls: ['./orders-edit.component.css']
+  selector: 'app-orders-process',
+  templateUrl: './orders-process.component.html',
+  styleUrls: ['./orders-process.component.css']
 })
-export class OrdersEditComponent implements OnInit {
+export class OrdersProcessComponent implements OnInit {
 	id: string;
     editMode = false;
     ans = false;
@@ -39,7 +41,14 @@ export class OrdersEditComponent implements OnInit {
   	collectors: any = [];
 
   	allPrds: any = [];
-  	selPrds: any = [];
+    selPrds: any = [];
+  	orderProcessingInfo: any = {
+        id: '',
+        order_id: '',
+        status: '',
+        updated: '',
+        products: []
+    };
 
   	constructor(
   	private conf: Config,
@@ -64,10 +73,11 @@ export class OrdersEditComponent implements OnInit {
       	
       	this.http.get(this.conf.apiPath+'api/products/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
           	this.allPrds = prodData;
+          	
       	});
- 	      this.http.get(this.conf.apiPath+'api/products/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-          	this.selPrds = prodData;
-      	});
+         this.http.get(this.conf.apiPath+'api/products/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
+            this.selPrds = prodData;
+        });
         
  	  	 this.route.params
 	  	.subscribe(
@@ -76,11 +86,22 @@ export class OrdersEditComponent implements OnInit {
       			this.editMode = params['recId'] != null;
       			this.login = this.sessionService.getItem('userClaim');
       			if(this.editMode){
+
+              this.http.get(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id).subscribe(prodData => {
+                  this.result = prodData;
+                  if(this.result.message.type=='success'){
+                    this.orderProcessingInfo = this.result.data;
+                    // console.log('this.orderProcessingInfo',this.orderProcessingInfo);
+                  }
+
+              });
+
+
               this.http.get(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
 	      				this.result=editData;
                 		if(this.result.message.type=='success'){
-                    console.log(this.result);
-	      					  this.order = this.result.data;
+                    this.order = this.result.data;
+                    console.log('this.order', this.order);
         				}
 	    			});
 	      		}
@@ -91,48 +112,32 @@ export class OrdersEditComponent implements OnInit {
 
 	doSubmit() {
     //console.log(this.order);
-		this.login = this.sessionService.getItem('userClaim');
-		if (this.editMode) {
-  			this.http.put(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.id, this.order).subscribe(success => {
+    this.login = this.sessionService.getItem('userClaim');
+    if (this.editMode) {
+        this.http.put(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id, {data: this.orderProcessingInfo.products}).subscribe(success => {
             this.result = success;
-        		if(this.result.message.type=='success'){
+            if(this.result.message.type=='success'){
+                // this.router.navigate(['/orders']);
+            } else {
+                this.errorMessage = this.result.message.msg;
+                return false;  
+            }
+        });
+      } else {
+        //console.log('Post: ',this.order);
+        this.http.post(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.login.userId, this.order).subscribe(success => {
+              this.result = success;
+          if(this.result.message.type=='success'){
                 this.router.navigate(['/orders']);
-        		} else {
-          			this.errorMessage = this.result.message.msg;
-          			return false;  
-        		}
-    		});
-    	} else {
-    		//console.log('Post: ',this.order);
-    		this.http.post(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.login.userId, this.order).subscribe(success => {
-          		this.result = success;
-    			if(this.result.message.type=='success'){
-          			this.router.navigate(['/orders']);
-        		} else {
-          			this.errorMessage = this.result.message.msg;
-          			return false;  
-        		}
-    		});
-    	}
-	}
+            } else {
+                this.errorMessage = this.result.message.msg;
+                return false;  
+            }
+        });
+      }
+  }
 
-	doDelete(){
-		this.login = this.sessionService.getItem('userClaim');
-  		if (this.editMode) {
-  			this.ans = confirm('Are you sure,you want to  delete?');
-	        if(this.ans==true){
-    	    	this.http.delete(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.id, this.order).subscribe(success => {
-              		this.result = success;
-	        		if(this.result.message.type=='success'){
-	          			this.router.navigate(['/orders']);
-	        		} else {
-	          			this.errorMessage = this.result.message.msg;
-	          			return false;  
-	        		}
-  			  	});
-        	}
-  		}
-  	}
+	doDelete(){}
   	
   	doCancel(){
   		this.router.navigate(['/orders']);
@@ -146,16 +151,5 @@ export class OrdersEditComponent implements OnInit {
     
     }
 
-    onProcessOrder(){
-        console.log('onProcessOrder......');
-        this.http.post(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id, this.order).subscribe(success => {
-              this.result = success;
-            if(this.result.message.type=='success'){
-              this.router.navigate(['/orders/process/'+this.id])
-            } else {
-              this.errorMessage = this.result.message.msg;
-              return false;  
-            }
-        });
-    }
+    onProcessOrder(){}
 }

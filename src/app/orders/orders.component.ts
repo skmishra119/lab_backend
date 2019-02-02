@@ -21,7 +21,7 @@ export class OrdersComponent implements OnInit {
     errorMessage= '';
     dataAdapter: any = [];
     source: any = [];
-    columns: any = [];
+    columns: any = []; 
 
     constructor(
   		  private conf: Config,

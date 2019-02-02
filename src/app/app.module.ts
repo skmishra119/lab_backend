@@ -41,6 +41,7 @@ import { CollectorsComponent } from './collectors/collectors.component';
 import { CollectorsEditComponent } from './collectors/collectors-edit/collectors-edit.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 import { BarcodeComponent } from './barcode/barcode.component';
+import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
 
 
 
@@ -72,6 +73,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
     jqxDateTimeInputComponent,
     jqxDataTableComponent,
     BarcodeComponent,
+    OrdersProcessComponent,
   ],
   imports: [
     BrowserModule,
