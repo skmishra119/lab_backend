@@ -20,7 +20,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
-
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login',pathMatch: 'full' },
@@ -62,7 +62,7 @@ const routes: Routes = [
 
   { path: 'barcode/generate', component: BarcodeComponent },
   
-
+  { path: 'reports', component: ReportsComponent },
 
 ];
 

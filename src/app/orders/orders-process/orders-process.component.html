@@ -4,7 +4,7 @@
 		  	<div class="container">
 		    	<div class="content-header">
 		      		<h4>Order Process</h4>
-		    		<form #ordForm="ngForm" name="ordForm" novalidate (ngSubmit)="ordForm.form.valid && doSubmit()">  		
+		    		<form #opsForm="ngForm" name="opsForm" novalidate (ngSubmit)="opsForm.form.valid && doSubmit()">  		
 		      			<div class="collapse navbar-collapse" id="myNavbar">
 		        			<ul class="nav navbar-nav navbar-right">
 		          				<li>
@@ -30,19 +30,19 @@
 		    		  		<div class="col-sm-4 col-md-4">
 		    		  			<div class="form-group">
 				        			<label>Barcode*</label>
-				          			<input type="text" name="barcode" #barcode="ngModel" [(ngModel)]="order.barcode" class="form-control" disabled>
+				          			<input type="text" name="barcode" #barcode="ngModel" [(ngModel)]="orderProcessingInfo.barcode" class="form-control" disabled>
 				        		</div>
 				        	</div>
 				        	<div class="col-sm-4 col-md-4">
 				        		<div class="form-group">
 				        			<label>Order Id</label>
-				        			<input type="text" name="id" #id="ngModel" [(ngModel)]="order.id" class="form-control" disabled>
+				        			<input type="text" name="id" #id="ngModel" [(ngModel)]="orderProcessingInfo.order_id" class="form-control" disabled>
 				        		</div>
 				        	</div>
 				        	<div class="col-sm-4 col-md-4">
 				        		<div class="form-group">
 				        			<label>Date*</label>
-				        			<jqxDateTimeInput [width]="300" [height]="35" name="order_date"  #order_date="ngModel" [(ngModel)]="order.order_date" class="form-control" disabled></jqxDateTimeInput>
+				        			<input type="text" name="order_date" #order_date="ngModel" [(ngModel)]="orderProcessingInfo.order_date" class="form-control" disabled>
 				        		</div>
 		    		  		</div>
 		    		  	</div>
@@ -50,33 +50,19 @@
 		    		  		<div class="col-sm-4 col-md-4">
 		    		  			<div class="form-group">
 		          					<label>Patient*</label>
-		          					<select type="text" name="patient_id" #patient_id="ngModel" [(ngModel)]="order.patient_id" class="form-control" disabled>
-		            					<option value="">Select One</option>
-		            					<option *ngFor="let pat of patients" [value]="pat.id">{{pat.fullname}}</option>
-		          					</select>
-		          					<span *ngIf="patient_id.invalid && patient_id.touched || (patient_id.invalid && ordForm.submitted)" style="color:red">Select a patient</span>
-		        				</div>
+		          					<input type="text" name="patient" #patient="ngModel" [(ngModel)]="orderProcessingInfo.patient" class="form-control" disabled>
+		          				</div>
 		    		  		</div>
 		    		  		<div class="col-sm-4 col-md-4">
 		    		  			<div class="form-group">
 		          					<label>Referred By*</label>
-		          					<select type="text" name="doctor_id" #doctor_id="ngModel" [(ngModel)]="order.doctor_id" class="form-control" disabled>
-		            					<option value="">Select One</option>
-		            					<option value="XXX">Self [No doctor]</option>
-		            					<option *ngFor="let dtr of doctors" [value]="dtr.id">{{dtr.fullname}}</option>
-		          					</select>
-		          					<span *ngIf="doctor_id.invalid && doctor_id.touched || (doctor_id.invalid && ordForm.submitted)" style="color:red">Select a referrer</span>
+		          					<input type="text" name="doctor" #doctor="ngModel" [(ngModel)]="orderProcessingInfo.doctor" class="form-control" disabled>
 		        				</div>
 		    		  		</div>
 		    		  		<div class="col-sm-4 col-md-4">
 		    		  			<div class="form-group">
 		          					<label>Sample collector*</label>
-		          					<select type="text" name="collector_id" #collector_id="ngModel" [(ngModel)]="order.collector_id" class="form-control" disabled>
-		            					<option value="">Select One</option>
-		            					<option value="XXX">Self [No home collection]</option>
-		            					<option *ngFor="let clt of collectors" [value]="clt.id">{{clt.fullname}}</option>
-		          					</select>
-		          					<span *ngIf="collector_id.invalid && collector_id.touched || (collector_id.invalid && ordForm.submitted)" style="color:red">Select a sample collector</span>
+		          					<input type="text" name="collector" #collector="ngModel" [(ngModel)]="orderProcessingInfo.collector" class="form-control" disabled>
 		        				</div>
 		    		  		</div>
 		    		  	</div>
@@ -98,19 +84,17 @@
 					    	    									<thead>
 					    	    										<tr>
 					    	    											<th>Item Name</th>
-					    	    											<th>Min Value</th>
-					    	    											<th>Max Value</th>
-					    	    											<th>Current Value</th>
+					    	    											<th>Ideal Value</th>
+					    	    											<th width="20%">Current Value</th>
 					    	    										</tr>
 					    	    									</thead>
 									    	    					<tbody>
 									    	    						<tr *ngFor="let order_item of order_prod.order_items; let i = index" >
 									    	    							<td>{{ order_item.name }}</td>
-									    	    							<td>{{ order_item.minval }}</td>
-									    	    							<td>{{ order_item.maxval }}</td>
+									    	    							<td>{{ order_item.minval }} - {{ order_item.maxval }} {{order_item.unit}}</td>
 									    	    							<td>
 									    	    								<div class="form-group">
-																        			<input type="text" name="currentval" #currentval="ngModel" [(ngModel)]="order_item.currentval" class="form-control">
+																        			<input type="text" name="currentval"  value="{{order_item.currentval}}" class="form-control">
 																        		</div>
 				        													</td>
 									    	    						</tr>

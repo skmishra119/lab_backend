@@ -42,6 +42,7 @@ import { CollectorsEditComponent } from './collectors/collectors-edit/collectors
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 
@@ -74,6 +75,7 @@ import { OrdersProcessComponent } from './orders/orders-process/orders-process.c
     jqxDataTableComponent,
     BarcodeComponent,
     OrdersProcessComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,

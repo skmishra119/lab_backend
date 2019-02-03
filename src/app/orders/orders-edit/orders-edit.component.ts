@@ -147,15 +147,18 @@ export class OrdersEditComponent implements OnInit {
     }
 
     onProcessOrder(){
-        console.log('onProcessOrder......');
-        this.http.post(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id, this.order).subscribe(success => {
-              this.result = success;
-            if(this.result.message.type=='success'){
-              this.router.navigate(['/orders/process/'+this.id])
-            } else {
-              this.errorMessage = this.result.message.msg;
-              return false;  
-            }
-        });
+        this.login = this.sessionService.getItem('userClaim');
+        this.ans = confirm('Are you sure, you want to  process this order?');
+        if(this.ans==true){
+            this.http.post(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id, this.order).subscribe(success => {
+                this.result = success;
+                if(this.result.message.type=='success'){
+                    this.router.navigate(['/orders/process/'+this.id])
+                } else {
+                    this.errorMessage = this.result.message.msg;
+                    return false;  
+                }
+            });
+        }
     }
 }

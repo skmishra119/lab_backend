@@ -14,127 +14,64 @@ import { SessionService } from '../../shared/services/session.service';
   styleUrls: ['./orders-process.component.css']
 })
 export class OrdersProcessComponent implements OnInit {
-	id: string;
+    orderId: string;
     editMode = false;
     ans = false;
-  	ordForm: FormGroup;
+  	opsForm: FormGroup;
   	login: any = [];
     result: any = [];
     errorMessage= '';
 
-    order: any = {
-        barcode: '',
-      	patient_id: '',
-        doctor_id: '',
-        collector_id: '',
-        order_date: '',
-        prod_ids: [] ,
-        status: ''
-  	};
-
-    ord_prds: any =  {
-        prod_ids: '',
-    };
-  	
-  	doctors: any =  [];
-  	patients: any = [];
-  	collectors: any = [];
-
-  	allPrds: any = [];
-    selPrds: any = [];
-  	orderProcessingInfo: any = {
+    orderProcessingInfo: any = {
         id: '',
         order_id: '',
+        doctor: '',
+        patient: '',
+        collector: '',
         status: '',
         updated: '',
         products: []
     };
 
   	constructor(
-  	private conf: Config,
-    private authService: AuthService, 
-  	private sessionService: SessionService, 
-  	private http: HttpClient,
-  	private route: ActivatedRoute,
-    private router: Router) {
+  	  private conf: Config,
+      private authService: AuthService, 
+      private sessionService: SessionService, 
+      private http: HttpClient,
+      private route: ActivatedRoute,
+      private router: Router) {
     }
 
   	ngOnInit() {
   		  this.login = this.sessionService.getItem('userClaim');
-      	this.http.get(this.conf.apiPath+'api/doctors/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-          	this.doctors = prodData;
-      	});
-      	this.http.get(this.conf.apiPath+'api/patients/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-          	this.patients = prodData;
-      	});
-      	this.http.get(this.conf.apiPath+'api/collectors/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-          	this.collectors = prodData;
-      	});
-      	
-      	this.http.get(this.conf.apiPath+'api/products/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-          	this.allPrds = prodData;
-          	
-      	});
-         this.http.get(this.conf.apiPath+'api/products/'+this.login.lab_id+'::'+this.login.userId).subscribe(prodData => {
-            this.selPrds = prodData;
-        });
-        
- 	  	 this.route.params
-	  	.subscribe(
-    		(params: Params) => {
-      			this.id = params['recId'];
+        this.route.params.subscribe(
+    		  (params: Params) => {
+      			this.orderId = params['recId'];
       			this.editMode = params['recId'] != null;
       			this.login = this.sessionService.getItem('userClaim');
       			if(this.editMode){
-
-              this.http.get(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id).subscribe(prodData => {
+              this.http.get(this.conf.apiPath+'/api/order_processing/'+this.login.lab_id+'::'+this.orderId).subscribe(prodData => {
                   this.result = prodData;
                   if(this.result.message.type=='success'){
                     this.orderProcessingInfo = this.result.data;
-                    // console.log('this.orderProcessingInfo',this.orderProcessingInfo);
+                    //console.log('orderProcessingInfo: ',this.orderProcessingInfo,this.result.data);
                   }
-
               });
-
-
-              this.http.get(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.id).subscribe(editData => {
-	      				this.result=editData;
-                		if(this.result.message.type=='success'){
-                    this.order = this.result.data;
-                    console.log('this.order', this.order);
-        				}
-	    			});
 	      		}
-      			//this.initForm();
-    		}
-  		);
-	}
+    		});
+	  }
 
 	doSubmit() {
-    //console.log(this.order);
-    this.login = this.sessionService.getItem('userClaim');
-    if (this.editMode) {
-        this.http.put(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.id, {data: this.orderProcessingInfo.products}).subscribe(success => {
-            this.result = success;
-            if(this.result.message.type=='success'){
-                // this.router.navigate(['/orders']);
-            } else {
-                this.errorMessage = this.result.message.msg;
-                return false;  
-            }
-        });
-      } else {
-        //console.log('Post: ',this.order);
-        this.http.post(this.conf.apiPath+'api/order/'+this.login.lab_id+'::'+this.login.userId, this.order).subscribe(success => {
-              this.result = success;
+      this.login = this.sessionService.getItem('userClaim');
+      this.http.put(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.orderId, {data: this.orderProcessingInfo.products}).subscribe(success => {
+          this.result = success;
           if(this.result.message.type=='success'){
-                this.router.navigate(['/orders']);
-            } else {
-                this.errorMessage = this.result.message.msg;
-                return false;  
-            }
-        });
-      }
+              this.router.navigate(['/orders']);
+          } else {
+              this.errorMessage = this.result.message.msg;
+              return false;  
+          }
+      });
   }
 
 	doDelete(){}
@@ -142,14 +79,4 @@ export class OrdersProcessComponent implements OnInit {
   	doCancel(){
   		this.router.navigate(['/orders']);
   	}
-
-    addProducts(){
-
-    }
-
-    removeProducts(){
-    
-    }
-
-    onProcessOrder(){}
 }

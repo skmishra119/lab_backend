@@ -34,7 +34,7 @@ export class OrdersComponent implements OnInit {
 
   	ngOnInit() {
 		    this.login= this.sessionService.getItem('userClaim');
-        console.log(this.conf.apiPath+'api/orders/'+this.login.lab_id+'::'+this.login.userId);
+        //console.log(this.conf.apiPath+'api/orders/'+this.login.lab_id+'::'+this.login.userId);
       	this.http.get(this.conf.apiPath+'api/orders/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
        		 this.data=uData;
            this.source = {
@@ -56,9 +56,14 @@ export class OrdersComponent implements OnInit {
             this.columns =
             [
                 { text: 'Barcode', dataField: 'barcode', cellsRenderer: (row: any, column: any, value: any, rowData: any): string => {
-                    let retval = '<a href="orders/edit/'+rowData.id+'">'+rowData.barcode+'</a>';
-                    return retval;
+                    if(rowData.status=='ACTIVE'){
+                        return '<a href="orders/edit/'+rowData.id+'">'+rowData.barcode+'</a>';
+                    } else if(rowData.status=='PROCESSING'){
+                        return '<a href="orders/process/'+rowData.id+'">'+rowData.barcode+'</a>';
+                    } else {
+                      return rowData.barcode;
                     }
+                  }
                 },
                 { text: 'Ordered On', dataField: 'order_date'},
                 { text: 'Patient', dataField: 'patient'},

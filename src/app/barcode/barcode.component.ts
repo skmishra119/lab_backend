@@ -16,6 +16,27 @@ export class BarcodeComponent implements OnInit {
       cnt: ''
   	};
   	
+  	barSettings: any =  {
+  		elementType: 'svg',
+  		format: 'CODE128',
+  		lineColor: '#000000',
+  		width: 2,
+  		height: 50,
+  		displayValue: true,
+  		fontOptions: '',
+  		font: 'monospace',
+  		textAlign: 'center',
+  		textPosition: 'bottom',
+  		textMargin: 2,
+  		fontSize: 12,
+  		background: '#ffffff',
+  		margin: 10,
+  		marginTop: 10,
+  		marginBottom: 10,
+  		marginLeft: 10,
+  		marginRight: 10
+  	};
+  	
   	barCounter = 0;
   	cDate: any = new Date();
   	codes: any = [];
@@ -29,7 +50,7 @@ export class BarcodeComponent implements OnInit {
     }
 
   	ngOnInit() {
-  	
+  		
   	}
   
   	doSubmit() {
