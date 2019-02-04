@@ -6,6 +6,7 @@
 
 .jumbotron {
 	 padding: 10px !important;
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .jumbotron .container{
 	width: 100% !important;
@@ -22,4 +23,13 @@ td .btn {
 	text-align: center;
 	padding: 5px 8px !important;
     font-size: 12px !important;
+}
+
+div.card {
+	margin: 10px 0;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    padding: 10px;
+    background: #f8f8f8;
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 }

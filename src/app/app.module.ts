@@ -12,6 +12,7 @@ import { jqxDateTimeInputComponent } from 'jqwidgets-scripts/jqwidgets-ts/angula
 import { jqxDataTableComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxdatatable';
 
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -85,6 +86,7 @@ import { ReportsComponent } from './reports/reports.component';
     HttpClientModule,
     DataTablesModule,
     NgxBarcodeModule,
+    ChartsModule,
   ],
   providers: [
     Config, SessionService, HelperService, AuthService, CookieService,
