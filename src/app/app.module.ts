@@ -14,6 +14,8 @@ import { jqxDataTableComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jq
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { ChartsModule } from 'ng2-charts';
 
+import { SignaturePadModule } from 'angular2-signaturepad';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -89,6 +91,7 @@ import { OrdersFinalComponent } from './orders/orders-final/orders-final.compone
     DataTablesModule,
     NgxBarcodeModule,
     ChartsModule,
+    SignaturePadModule,
   ],
   providers: [
     Config, SessionService, HelperService, AuthService, CookieService,
