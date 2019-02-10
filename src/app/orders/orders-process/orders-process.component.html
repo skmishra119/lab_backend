@@ -110,6 +110,22 @@
 						        </div>
 		    	    		</div>
 		    	    	</div>
+		    	    	<div class="row">
+		    	    		<div class="col-sm-8 col-md-8">&nbsp;</div>
+		    	    		<div class="col-sm-4 col-md-4">
+		    	    			<div class="form-group">
+		    	    				<label>Status*</label>
+						          	<select type="text" name="status" #status="ngModel" [(ngModel)]="orderProcessingInfo.status" class="form-control" required>
+						            	<option value="">Select One</option>
+						            	<option value="PROCESSING">PROCESSING</option>
+						            	<option value="PROCESSED">PROCESSED</option>
+						          	</select>
+						          	<span *ngIf="status.invalid && status.touched || (status.invalid && opsForm.submitted)" style="color:red">Select
+						            Status</span>
+						          	<div *ngIf="errorMessage != ''" style="color:red">{{errorMessage}}</div>
+						        </div>
+		    	    		</div>
+		    	    	</div>
 				        <hr/>
 				        <div class="collapse navbar-collapse" id="myNavbar">
 		        			<ul class="nav navbar-nav navbar-right">

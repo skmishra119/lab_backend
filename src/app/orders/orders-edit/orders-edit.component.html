@@ -104,9 +104,9 @@
 						          	<select type="text" name="status" #status="ngModel" [(ngModel)]="order.status" class="form-control" required>
 						            	<option value="">Select One</option>
 						            	<option value="ACTIVE">ACTIVE</option>
-						            	<option value="INPROCESS">INPROCESS</option>
-						            	<option value="COMPLETED">COMPLETED</option>
-						            	<option value="SIGNED">SIGNED</option>
+						            	<option value="PROCESSING">PROCESSING</option>
+						            	<!--<option value="PROCESSED">PROCESSED</option>
+						            	<option value="SIGNED">SIGNED</option>-->
 						            	<option value="DELETED">DELETED</option>
 						          	</select>
 						          	<span *ngIf="status.invalid && status.touched || (status.invalid && ordForm.submitted)" style="color:red">Select

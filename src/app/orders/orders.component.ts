@@ -60,6 +60,8 @@ export class OrdersComponent implements OnInit {
                         return '<a href="orders/edit/'+rowData.id+'">'+rowData.barcode+'</a>';
                     } else if(rowData.status=='PROCESSING'){
                         return '<a href="orders/process/'+rowData.id+'">'+rowData.barcode+'</a>';
+                    } else if(rowData.status=='PROCESSED'){
+                        return '<a href="orders/final-sign/'+rowData.id+'">'+rowData.barcode+'</a>';
                     } else {
                       return rowData.barcode;
                     }

@@ -63,7 +63,7 @@ export class OrdersProcessComponent implements OnInit {
 
 	doSubmit() {
       this.login = this.sessionService.getItem('userClaim');
-      this.http.put(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.orderId, {data: this.orderProcessingInfo.products}).subscribe(success => {
+      this.http.put(this.conf.apiPath+'api/order_processing/'+this.login.lab_id+'::'+this.orderId, {data: this.orderProcessingInfo}).subscribe(success => {
           this.result = success;
           if(this.result.message.type=='success'){
               this.router.navigate(['/orders']);

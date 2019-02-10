@@ -44,6 +44,7 @@ import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component'
 import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
 import { ReportsComponent } from './reports/reports.component';
+import { OrdersFinalComponent } from './orders/orders-final/orders-final.component';
 
 
 
@@ -77,6 +78,7 @@ import { ReportsComponent } from './reports/reports.component';
     BarcodeComponent,
     OrdersProcessComponent,
     ReportsComponent,
+    OrdersFinalComponent,
   ],
   imports: [
     BrowserModule,

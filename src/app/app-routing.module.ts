@@ -20,6 +20,7 @@ import { BarcodeComponent } from './barcode/barcode.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersEditComponent } from './orders/orders-edit/orders-edit.component';
 import { OrdersProcessComponent } from './orders/orders-process/orders-process.component';
+import { OrdersFinalComponent } from './orders/orders-final/orders-final.component';
 import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
@@ -59,6 +60,7 @@ const routes: Routes = [
   { path: 'orders/new', component: OrdersEditComponent },
   { path: 'orders/edit/:recId', component: OrdersEditComponent },
   { path: 'orders/process/:recId', component: OrdersProcessComponent },
+  { path: 'orders/final-sign/:recId', component: OrdersFinalComponent },
 
   { path: 'barcode/generate', component: BarcodeComponent },
   

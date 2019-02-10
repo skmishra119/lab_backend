@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
       {data: [48, 35, 49, 52], label: 'Repeat'}
     ];
 
+    public Chart_2: any = [];
+
     public ChartOptions_2 = {
       responsive: true
     };
@@ -53,6 +55,6 @@ export class DashboardComponent implements OnInit {
   	}
 
   	ngOnInit() {
-  	
+      
   	}
 }
