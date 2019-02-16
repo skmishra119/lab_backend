@@ -62,6 +62,8 @@ export class OrdersComponent implements OnInit {
                         return '<a href="orders/process/'+rowData.id+'">'+rowData.barcode+'</a>';
                     } else if(rowData.status=='PROCESSED'){
                         return '<a href="orders/final-sign/'+rowData.id+'">'+rowData.barcode+'</a>';
+                    } else if(rowData.status=='SIGNED') {
+                        return '<a href="http://localhost/lab_backapi/docs/'+rowData.id+'.pdf" target="_blank">'+rowData.barcode+'</a>';
                     } else {
                       return rowData.barcode;
                     }

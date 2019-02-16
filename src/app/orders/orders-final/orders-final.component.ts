@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Config } from '../../config';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
@@ -23,7 +23,7 @@ export class OrdersFinalComponent implements OnInit {
     result: any = [];
     errorMessage= '';
 
-    signaturePad: SignaturePad;
+    @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
     orderProcessingInfo: any = {
         id: '',
@@ -38,6 +38,14 @@ export class OrdersFinalComponent implements OnInit {
         status: '',
         updated: '',
         products: []
+    };
+
+    orderInfo: any = {
+    	id:'',
+    	observation:'',
+    	doctor_name:'',
+    	status:'',
+    	doctor_esign:''
     };
 
     private sigPadOptions: Object = {
@@ -67,7 +75,13 @@ export class OrdersFinalComponent implements OnInit {
               		this.result = prodData;
               		if(this.result.message.type=='success'){
                 		this.orderProcessingInfo = this.result.data;
-                		//console.log('orderProcessingInfo: ',this.orderProcessingInfo,this.result.data);
+                		this.orderProcessingInfo.doctor_name = this.login.fullName;
+                		if(this.result.data.doctor_esign!=''){
+                			this.orderProcessingInfo.doctor_esign = this.result.data.doctor_esign;
+                			this.orderInfo.doctor_esign = this.result.data.doctor_esign;
+                			this.signaturePad.fromDataURL(this.result.data.doctor_esign, this.sigPadOptions);
+                		}
+                   		//console.log('doctor-esign: ',this.result.data.doctor_esign);
               		}
           		});
       		}
@@ -75,18 +89,21 @@ export class OrdersFinalComponent implements OnInit {
 	}
 
 	drawComplete() {
-    	// will be notified of szimek/signature_pad's onEnd event
-    	console.log(this.signaturePad.toDataURL());
+    	this.orderProcessingInfo.doctor_esign = this.signaturePad.toDataURL();
   	}
  
   	drawStart() {
-    	// will be notified of szimek/signature_pad's onBegin event
     	console.log('begin drawing');
   	}
 
   	doSubmit() {
-      /*this.login = this.sessionService.getItem('userClaim');
-      this.http.put(this.conf.apiPath+'api/order_esign/'+this.login.lab_id+'::'+this.orderId, {data: this.orderProcessingInfo}).subscribe(success => {
+      this.login = this.sessionService.getItem('userClaim');
+      this.orderInfo.id = this.orderId;
+      this.orderInfo.observation = this.orderProcessingInfo.observation;
+      this.orderInfo.doctor_name = this.orderProcessingInfo.doctor_name;
+      this.orderInfo.doctor_esign = this.getBase64Image();
+      this.orderInfo.status = this.orderProcessingInfo.status;
+      this.http.put(this.conf.apiPath+'api/order_esign/'+this.login.lab_id+'::'+this.orderId, {data: this.orderInfo}).subscribe(success => {
         	this.result = success;
           	if(this.result.message.type=='success'){
             	this.router.navigate(['/orders']);
@@ -94,10 +111,14 @@ export class OrdersFinalComponent implements OnInit {
             	this.errorMessage = this.result.message.msg;
               	return false;  
           	}
-      	});*/
-      	console.log(this);
+      	});
+      	console.log(this.orderInfo);
   	}
 
+  	getBase64Image(){
+  		var dataURL = this.signaturePad.toDataURL();
+    	return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  	}
   	doCancel(){
   		this.router.navigate(['/orders']);
   	}
