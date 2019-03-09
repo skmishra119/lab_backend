@@ -7,6 +7,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SessionService } from '../../shared/services/session.service';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 
+
 @Component({
   selector: 'app-orders-final',
   templateUrl: './orders-final.component.html',
@@ -48,7 +49,7 @@ export class OrdersFinalComponent implements OnInit {
     	doctor_esign:''
     };
 
-    private sigPadOptions: Object = {
+    sigPadOptions: Object = {
     	'minWidth': 1,
     	'lineWidth': 1
   	};
