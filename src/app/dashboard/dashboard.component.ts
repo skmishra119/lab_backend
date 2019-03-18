@@ -1,13 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { SessionService } from '../shared/services/session.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
-	public ChartOptions_1 = {
+  logUser: any = [];
+  authorized = false;
+	
+  public ChartOptions_1 = {
       scaleShowVerticalLines: false,
       responsive: true
     };
@@ -50,11 +56,18 @@ export class DashboardComponent implements OnInit {
       {data: [28, 38, 42, 49, 46, 67, 41], label: 'In Progress'},
       {data: [38, 21, 21, 19, 37, 23, 44], label: 'Delivered'}
     ];
-  	constructor(private authService: AuthService) { 
+  	constructor(private authService: AuthService,  
+      private sessionService: SessionService, 
+      private router: Router, 
+      private route: ActivatedRoute) { 
 
   	}
 
   	ngOnInit() {
-      
+      this.authorized = this.authService.isAuthorised();
+      if(this.authorized == false){
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      }
   	}
 }
