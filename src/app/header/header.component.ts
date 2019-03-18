@@ -10,7 +10,7 @@ import { SessionService } from '../shared/services/session.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    logoImage:any = "../assets/logo.png";
+
     logUser: any = [];
     authorized = false;
 

@@ -14,11 +14,6 @@
 
 .content-header h4 { float: left !important; margin-top: 2px !important; }
 
-.logo-img {
-	height: 33px !important;
-    margin-top: -6px !important;
-}
-
 hr {
 	border: 1px solid #666 !important;
 }
@@ -45,10 +40,4 @@ signature-pad > canvas{
 	border: 1px solid #ccc !important;
 	border-radius: 6px !important;
 	background: #fff;
-}
-
-.powered{
-	text-decoration: none !important;
-    color: orangered !important;
-    font-weight: 600 !important;
 }

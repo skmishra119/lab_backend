@@ -1,0 +1,68 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="content-header">
+      <h4>Dashboard</h4>
+      <div class="collapse navbar-collapse" id="myNavbar">
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+    	<div class="col-sm-6 col-md-6">
+    		<div class="card">
+  				<div class="card-body">
+    				<h4 class="card-title">Orders [last thee months]</h4>
+    				<canvas baseChart
+            			[datasets]="ChartData_1"
+            			[labels]="ChartLabels_1"
+            			[options]="ChartOptions_1"
+            			[legend]="ChartLegend_1"
+            			[chartType]="ChartType_1">
+    				</canvas>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-sm-6 col-md-6">
+    		<div class="card">
+  				<div class="card-body">
+    				<h4 class="card-title">Orders [this month]</h4>
+      				<canvas baseChart
+            			[data]="ChartData_2"
+            			[labels]="ChartLabels_2"
+            			[options]="ChartOptions_2"
+            			[legend]="ChartLegend_2"
+            			[chartType]="ChartType_2">
+    				</canvas>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-sm-6 col-md-6">
+    		<div class="card">
+  				<div class="card-body">
+    				<h4 class="card-title">Orders [last seven days]</h4>
+      				<canvas baseChart
+            			[data]="ChartData_3"
+            			[labels]="ChartLabels_3"
+            			[options]="ChartOptions_3"
+            			[legend]="ChartLegend_3"
+            			[chartType]="ChartType_3">
+    				</canvas>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="col-sm-6 col-md-6">
+    		<div class="card">
+  				<div class="card-body">
+    				<h4 class="card-title">Orders [this month-daily]</h4>
+      				<canvas baseChart
+            			[datasets]="ChartData_4"
+            			[labels]="ChartLabels_4"
+            			[options]="ChartOptions_4"
+            			[legend]="ChartLegend_4"
+            			[chartType]="ChartType_4">
+    				</canvas>
+    			</div>
+    		</div>
+    	</div>
+	</div>
+  </div>
+</div>

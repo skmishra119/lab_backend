@@ -1,0 +1,22 @@
+<div class="jumbotron">
+  <div class="container">
+    <div class="content-header">
+      <h4>Patients</h4>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <div class="btn-toolbar" role="toolbar"> 
+              <div class="btn-group"> 
+                <button type="button" class="btn btn-default" title="new Patient" alt="New Patient" (click)="onNewPatient()"> 
+                  <span class="glyphicon glyphicon-plus"></span> 
+                </button>
+              </div> 
+            </div> 
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <jqxDataTable [width]="'100%'" [source]="dataAdapter" [columns]="columns" [altRows]="true" [pageable]="true" [filterable]="true" [pagerButtonsCount]="10" [filterMode]="'simple'" [pageable]="true" [sortable]="true" [pageSize]="10"></jqxDataTable>
+  </div>
+</div>
