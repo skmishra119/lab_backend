@@ -89,12 +89,12 @@
 					    	    										</tr>
 					    	    									</thead>
 									    	    					<tbody>
-									    	    						<tr *ngFor="let order_item of order_prod.order_items; let i = index" >
+									    	    						<tr *ngFor="let order_item of order_prod.order_items; let j = index" >
 									    	    							<td>{{ order_item.name }}</td>
 									    	    							<td>{{ order_item.minval }} - {{ order_item.maxval }} {{order_item.unit}}</td>
 									    	    							<td>
 									    	    								<div class="form-group">
-																        			<input type="text" name="currentval"  value="{{order_item.currentval}}" class="form-control">
+																        			<input type="text" name="currentval" [(ngModel)]="order_item.currentval" class="form-control">
 																        		</div>
 				        													</td>
 									    	    						</tr>
