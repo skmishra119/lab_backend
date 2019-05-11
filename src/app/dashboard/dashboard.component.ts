@@ -27,12 +27,15 @@ export class DashboardComponent implements OnInit {
       scaleShowVerticalLines: false,
       responsive: true
     };
-    public ChartLabels_1 = ['Jan', 'Feb', 'March'];
+
+
+    public ChartLabels_1 = ['', '', ''];
     public ChartType_1 = 'bar';
     public ChartLegend_1 = true;
     public ChartData_1 = [
-    {data: [65, 59, 63], label: 'Fresh'},
-    {data: [48, 35, 49, 52], label: 'Repeat'}
+        {data: [], label: ''},
+        {data: [], label: ''},
+        {data: [], label: ''},
     ];
 
     public Chart_2: any = [];
@@ -40,19 +43,19 @@ export class DashboardComponent implements OnInit {
     public ChartOptions_2 = {
         responsive: true
     };
-    public ChartLabels_2 = ['Orders', 'In-Progress', 'Delivered'];
+    public ChartLabels_2 = ['', '', ''];
     public ChartType_2 = 'pie';
     public ChartLegend_2 = true;
-    public ChartData_2 = [80, 50, 30];
+    public ChartData_2 = [0, 0, 0];
 
 
     public ChartOptions_3 = {
         responsive: true
     };
-    public ChartLabels_3 = ['Orders', 'In-Progress', 'Delivered'];
+    public ChartLabels_3 = ['', '',''];
     public ChartType_3 = 'doughnut';
     public ChartLegend_3 = true;
-    public ChartData_3 = [8, 6, 2];
+    public ChartData_3 = [0, 0, 0];
 
     public ChartOptions_4 = {
         scaleShowVerticalLines: false,
@@ -82,10 +85,35 @@ export class DashboardComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/login']);
       } else {
+          
         this.login= this.sessionService.getItem('userClaim');
         this.http.get(this.conf.apiPath+'api/reports/'+this.login.lab_id+'::'+this.login.userId).subscribe(uData => {
             this.data=uData;
-            console.log("this.data",this.data);
+            if(this.data.order_this_month){
+
+                this.ChartLabels_2[0] = this.data.order_this_month.order_status[0];
+                this.ChartLabels_2[1] = this.data.order_this_month.order_status[1];
+                this.ChartLabels_2[2] = this.data.order_this_month.order_status[2];
+
+                this.ChartData_2 = this.data.order_this_month.graph_data
+            }
+            if(this.data.order_last_three_month){
+                this.ChartLabels_1[0] = this.data.order_last_three_month.months[0];
+                this.ChartLabels_1[1] = this.data.order_last_three_month.months[1];
+                this.ChartLabels_1[2] = this.data.order_last_three_month.months[2];
+
+                this.ChartData_1 = this.data.order_last_three_month.graph_data
+            }
+
+            if(this.data.order_last_seven_month){
+
+                this.ChartLabels_3[0] = this.data.order_last_seven_month.order_status[0];
+                this.ChartLabels_3[1] = this.data.order_last_seven_month.order_status[1];
+                this.ChartLabels_3[2] = this.data.order_last_seven_month.order_status[2];
+
+                this.ChartData_3 = this.data.order_last_seven_month.graph_data
+            }
+
         }, error => console.error(error));
       }
     }
