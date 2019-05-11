@@ -40,7 +40,7 @@ export class OrdersProcessComponent implements OnInit {
       private http: HttpClient,
       private route: ActivatedRoute,
       private router: Router) {
-    }
+    } 
 
   	ngOnInit() {
   		  this.login = this.sessionService.getItem('userClaim');

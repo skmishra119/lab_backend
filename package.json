@@ -28,7 +28,7 @@
     "crypto-js": "^3.1.9-1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "jqwidgets-scripts": "^7.0.0",
     "ng-multiselect-dropdown": "^0.2.3",
     "ng2-charts": "^1.6.0",
@@ -42,7 +42,7 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.12.0",
+    "@angular-devkit/build-angular": "^0.13.9",
     "@angular/cli": "^7.2.3",
     "@angular/compiler-cli": "^7.2.8",
     "@angular/language-service": "~7.2.0",
